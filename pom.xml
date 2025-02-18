@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,9 +20,9 @@
         <release.version>21</release.version>
         <micronaut.version>4.7.4</micronaut.version>
         <micronaut.aot.enabled>false</micronaut.aot.enabled>
-        <micronaut.aot.packageName>>${groupId}.${artifactId}.aot.generated</micronaut.aot.packageName>
+        <micronaut.aot.packageName>>${project.groupId}.${project.artifactId}.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
-        <exec.mainClass>${groupId}.${artifactId}.Main</exec.mainClass>
+        <exec.mainClass>${project.groupId}.${project.artifactId}.Main</exec.mainClass>
     </properties>
 
     <repositories>
@@ -59,7 +59,10 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.mqtt</groupId>
+            <artifactId>micronaut-mqttv5</artifactId>
         </dependency>
         <dependency>
             <groupId>io.micronaut.test</groupId>
