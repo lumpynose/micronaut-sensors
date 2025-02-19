@@ -13,12 +13,14 @@ public class ZigbeeListener {
             LoggerFactory.getLogger(ZigbeeListener.class);
     String retval = null;
 
+    @SuppressWarnings("unused")
     @Topic("zigbee2mqtt/0x54ef4410002a5a94/#") // (2)
     public void receive(byte[] data) { // (3)
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);
     }
 
+    @SuppressWarnings("unused")
     @Nullable
     public String getRetval() {
         return retval;

@@ -5,7 +5,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.runtime.server.EmbeddedServer;
 
-@Controller("/hello") // (1)
+@Controller("/hello")
 public class HelloController {
     private final String host;
     private final int port;
@@ -15,8 +15,8 @@ public class HelloController {
         port = embeddedServer.getPort();
     }
 
-    @Get(produces = MediaType.TEXT_PLAIN) // (2)
+    @Get(produces = MediaType.TEXT_PLAIN)
     public String index() {
-        return "Hello World"; // (3)
+        return "Hello World";
     }
 }

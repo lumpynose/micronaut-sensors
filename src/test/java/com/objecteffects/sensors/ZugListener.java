@@ -14,12 +14,14 @@ public class ZugListener {
             LoggerFactory.getLogger(ZugListener.class);
     String retval = null;
 
+    @SuppressWarnings("unused")
     @Topic("test/zug")
     public void receive(byte[] data) {
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);
     }
 
+    @SuppressWarnings("unused")
     @Nullable
     public String getRetval() {
         return retval;
