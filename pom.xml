@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.objecteffects</groupId>
-    <artifactId>micronaut-sensors</artifactId>
+    <artifactId>sensors</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -125,8 +125,8 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Amicronaut.processing.group=hello.hello</arg>
-                        <arg>-Amicronaut.processing.module=hello-hello</arg>
+<!--                        <arg>-Amicronaut.processing.group=com.objecteffects</arg>-->
+<!--                        <arg>-Amicronaut.processing.module=com-objecteffects</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>

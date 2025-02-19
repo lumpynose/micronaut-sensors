@@ -5,15 +5,16 @@ import io.micronaut.mqtt.annotation.Topic;
 import jakarta.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.nio.charset.StandardCharsets;
 
 @MqttSubscriber
-public class ProductListener {
+public class ZugListener {
     private static final Logger log =
-            LoggerFactory.getLogger(ProductListener.class);
+            LoggerFactory.getLogger(ZugListener.class);
     String retval = null;
 
-    @Topic("test/#")
+    @Topic("test/zug")
     public void receive(byte[] data) {
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);

@@ -16,6 +16,7 @@ public class ProductClientTest {
 
     @Test
     void testProductClient() {
+        log.info("testProductClient");
         client.send("micronaut2".getBytes());
     }
 }

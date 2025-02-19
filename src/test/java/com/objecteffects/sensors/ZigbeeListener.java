@@ -7,14 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 
-@MqttSubscriber
-public class ProductListener {
+@MqttSubscriber // (1)
+public class ZigbeeListener {
     private static final Logger log =
-            LoggerFactory.getLogger(ProductListener.class);
+            LoggerFactory.getLogger(ZigbeeListener.class);
     String retval = null;
 
-    @Topic("test/#")
-    public void receive(byte[] data) {
+    @Topic("zigbee2mqtt/0x54ef4410002a5a94/#") // (2)
+    public void receive(byte[] data) { // (3)
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);
     }

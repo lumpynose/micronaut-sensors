@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+
 @MicronautTest
-public class ProductListenerTest {
+public class ZigbeeListenerTest {
     private static final Logger log =
-            LoggerFactory.getLogger(ProductListenerTest.class);
+            LoggerFactory.getLogger(ZigbeeListenerTest.class);
 
     @Inject
-    ProductListener client;
+    ZigbeeListener client;
 
     @Test
-    void testProductListener() {
-        log.info("testProductListener");
-
+    void testZigbeeListener() {
         log.info("received {}", client.getRetval());
     }
 }
