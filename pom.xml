@@ -22,7 +22,7 @@
         <micronaut.aot.enabled>false</micronaut.aot.enabled>
         <micronaut.aot.packageName>>${project.groupId}.${project.artifactId}.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
-        <exec.mainClass>${project.groupId}.${project.artifactId}.Main</exec.mainClass>
+        <exec.mainClass>${project.groupId}.${project.artifactId}.main.Main</exec.mainClass>
     </properties>
 
     <repositories>

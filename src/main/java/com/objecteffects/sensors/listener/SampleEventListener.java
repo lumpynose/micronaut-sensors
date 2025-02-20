@@ -1,4 +1,4 @@
-package com.objecteffects.sensors;
+package com.objecteffects.sensors.listener;
 
 import io.micronaut.context.event.ShutdownEvent;
 import io.micronaut.context.event.StartupEvent;

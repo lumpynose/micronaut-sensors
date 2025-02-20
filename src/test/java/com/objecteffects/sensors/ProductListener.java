@@ -14,7 +14,7 @@ public class ProductListener {
     String retval = null;
 
     @SuppressWarnings("unused")
-    @Topic("test/#")
+    @Topic(value = "test/#")
     public void receive(byte[] data) {
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);

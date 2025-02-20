@@ -11,11 +11,12 @@ import java.nio.charset.StandardCharsets;
 @MqttSubscriber
 public class ZugListener {
     private static final Logger log =
-            LoggerFactory.getLogger(ZugListener.class);
+            LoggerFactory.getLogger(
+                    com.objecteffects.sensors.listener.ZugListener.class);
     String retval = null;
 
     @SuppressWarnings("unused")
-    @Topic("test/zug")
+    @Topic(value = "test/zug")
     public void receive(byte[] data) {
         retval = new String(data, StandardCharsets.UTF_8);
         log.info("receive: {}", retval);

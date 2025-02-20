@@ -6,7 +6,7 @@ import io.micronaut.mqtt.annotation.v5.MqttPublisher;
 
 @MqttPublisher
 public interface ProductClient {
-    @Topic("test/product")
+    @Topic(value = "test/product")
     @Retained(true)
     void send(byte[] data);
 }

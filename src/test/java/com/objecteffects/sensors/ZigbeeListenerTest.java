@@ -16,6 +16,8 @@ public class ZigbeeListenerTest {
 
     @Test
     void testZigbeeListener() {
+        log.info("testZigbeeListener");
+
         log.info("received {}", client.getRetval());
     }
 }

@@ -1,4 +1,4 @@
-package com.objecteffects.sensors;
+package com.objecteffects.sensors.main;
 
 import io.micronaut.runtime.Micronaut;
 
