@@ -1,6 +1,5 @@
 package com.objecteffects.sensors;
 
-import io.micronaut.mqtt.annotation.MqttSubscriber;
 import io.micronaut.mqtt.annotation.Topic;
 import jakarta.annotation.Nullable;
 import org.slf4j.Logger;

@@ -132,8 +132,8 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-<!--                        <arg>-Amicronaut.processing.group=com.objecteffects</arg>-->
-<!--                        <arg>-Amicronaut.processing.module=com-objecteffects</arg>-->
+                        <!--                        <arg>-Amicronaut.processing.group=com.objecteffects</arg>-->
+                        <!--                        <arg>-Amicronaut.processing.module=com-objecteffects</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>
