@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 @Singleton
 public class SampleEventListener {
-    private static final Logger log
-            = LoggerFactory.getLogger(SampleEventListener.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(SampleEventListener.class);
 
     @EventListener
     public void onStartupEvent(StartupEvent event) {

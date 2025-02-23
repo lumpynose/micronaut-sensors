@@ -1,6 +1,5 @@
 package com.objecteffects.sensors.controller;
 
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -10,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 @Controller("/")
 class ViewsTopController {
-    private static final Logger log
-            = LoggerFactory.getLogger(ViewsTopController.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(ViewsTopController.class);
 
     @View("home")
     @Get("/")

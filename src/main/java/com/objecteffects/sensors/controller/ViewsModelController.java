@@ -1,26 +1,27 @@
 package com.objecteffects.sensors.controller;
 
-import com.objecteffects.sensors.listener.ZugListener;
+import com.objecteffects.sensors.listener.SensorValue;
+import com.objecteffects.sensors.listener.ZigbeeListener;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.views.View;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jakarta.inject.Inject;
 
 @Controller("/sensor")
 class ViewsModelController {
-    private static final Logger log
-            = LoggerFactory.getLogger(ViewsModelController.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(ViewsModelController.class);
 
     @Inject
     ApplicationContext applicationContext;
 
     @Inject
-    ZugListener zugListener;
+    ZigbeeListener zugListener;
 
     @View("sensor")
     @Get("/")
@@ -28,10 +29,10 @@ class ViewsModelController {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());
 
-        final String retVal = zugListener.getRetval();
+        final SensorValue message = zugListener.getMessage();
 
-        log.info("retVal: {}", retVal);
+        log.info("message: {}", message);
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensor", retVal));
+        return HttpResponse.ok(CollectionUtils.mapOf("sensor", message));
     }
 }

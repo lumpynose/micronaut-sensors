@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
-@MqttSubscriber
+//@MqttSubscriber
 public class ZugListener {
     private static final Logger log =
             LoggerFactory.getLogger(
-                    com.objecteffects.sensors.listener.ZugListener.class);
+                    com.objecteffects.sensors.listener.ZigbeeListener.class);
     String retval = null;
 
     @SuppressWarnings("unused")

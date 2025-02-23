@@ -1,5 +1,6 @@
 package com.objecteffects.sensors;
 
+import com.objecteffects.sensors.listener.ZigbeeListener;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,11 @@ public class ZigbeeListenerTest {
     ZigbeeListener client;
 
     @Test
-    void testZigbeeListener() {
+    void testZigbeeListener() throws InterruptedException {
         log.info("testZigbeeListener");
 
-        log.info("received {}", client.getRetval());
+        log.info("received {}", client.getMessage());
+
+        Thread.sleep(45000);
     }
 }

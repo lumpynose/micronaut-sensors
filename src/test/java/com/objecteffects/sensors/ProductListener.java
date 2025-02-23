@@ -5,9 +5,10 @@ import io.micronaut.mqtt.annotation.Topic;
 import jakarta.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.nio.charset.StandardCharsets;
 
-@MqttSubscriber
+//@MqttSubscriber
 public class ProductListener {
     private static final Logger log =
             LoggerFactory.getLogger(ProductListener.class);
