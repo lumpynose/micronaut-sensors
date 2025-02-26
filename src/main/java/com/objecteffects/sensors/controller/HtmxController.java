@@ -14,11 +14,18 @@ class HtmxController {
     private static final Logger log =
             LoggerFactory.getLogger(HtmxController.class);
 
-    @View("home")
+    @View("htmx")
+    @Get("/")
+    public HttpResponse<?> htmx() {
+        log.info("htmx");
+
+        return HttpResponse.ok();
+    }
+
     @Get("/clicked")
     @Produces(MediaType.TEXT_HTML)
-    public HttpResponse<?> index() {
-        log.info("htmx");
+    public HttpResponse<?> clicked() {
+        log.info("htmx clicked");
 
         return HttpResponse.ok("<div>replacement</div>");
     }

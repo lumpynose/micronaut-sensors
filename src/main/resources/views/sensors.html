@@ -8,9 +8,9 @@
     <h2>Sensors h2</h2>
     <div th:each="sensor : ${sensors}">
         <div>
-        <span th:text="${sensor.key}">Sensor data</span>
-        <br />
-        <span th:text="${sensor.value.temperature}">Sensor data</span>
+            <span th:text="${sensor.key}">Sensor data</span>
+            <br/>
+            <span th:text="${sensor.value.temperature}">Sensor data</span>
         </div>
     </div>
 </section>
