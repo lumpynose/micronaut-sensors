@@ -49,6 +49,10 @@
         </dependency>
         <dependency>
             <groupId>io.micronaut.views</groupId>
+            <artifactId>micronaut-views-htmx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
         </dependency>
         <dependency>

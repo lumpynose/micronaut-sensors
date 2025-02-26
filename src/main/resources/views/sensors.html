@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sensor</title>
+</head>
+<body>
+<section>
+    <h2>Sensors h2</h2>
+    <div th:each="sensor : ${sensors}">
+        <div>
+        <span th:text="${sensor.key}">Sensor data</span>
+        <br />
+        <span th:text="${sensor.value.temperature}">Sensor data</span>
+        </div>
+    </div>
+</section>
+</body>
+</html>

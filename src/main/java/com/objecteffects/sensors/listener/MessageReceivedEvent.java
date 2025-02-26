@@ -10,16 +10,15 @@ public class MessageReceivedEvent {
     private static final Logger log =
             LoggerFactory.getLogger(MessageReceivedEvent.class);
 
-    @Inject
-    ZigbeeListener zigbeeListener;
+    private final SensorValue sensorValue;
 
-    MessageReceivedEvent(SensorValue sensorValue) {
-        log.info("sensorValue: {}", sensorValue.toString());
+    MessageReceivedEvent(SensorValue _sensorValue) {
+        log.info("sensorValue: {}", _sensorValue.toString());
+
+        this.sensorValue = _sensorValue;
     }
 
-    public Map<String, SensorValue> getSensorValues() {
-        log.debug("messages: {}", zigbeeListener.getMessages());
-
-        return zigbeeListener.getMessages();
+    public SensorValue getSensorValue() {
+        return sensorValue;
     }
 }

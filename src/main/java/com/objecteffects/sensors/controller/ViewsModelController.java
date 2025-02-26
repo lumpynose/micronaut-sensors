@@ -12,27 +12,29 @@ import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Controller("/sensor")
+import java.util.Map;
+
+@Controller("/sensors")
 class ViewsModelController {
     private static final Logger log =
             LoggerFactory.getLogger(ViewsModelController.class);
 
     @Inject
-    ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     @Inject
-    ZigbeeListener zugListener;
+    private ZigbeeListener zigbeeListener;
 
-    @View("sensor")
+    @View("sensors")
     @Get("/")
     public HttpResponse<?> index() {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());
 
-        final SensorValue message = zugListener.getMessage();
+        final Map<String, SensorValue> messages = zigbeeListener.getMessages();
 
-        log.info("message: {}", message);
+        log.info("messages: {}", messages);
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensor", message));
+        return HttpResponse.ok(CollectionUtils.mapOf("sensors", messages));
     }
 }

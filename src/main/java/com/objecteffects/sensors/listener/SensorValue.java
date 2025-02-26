@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Serdeable
 public class SensorValue {
+    String zigbeeId;
     LocalDateTime timestamp;
     @JsonProperty("airquality")
     String airQuality;
@@ -25,6 +26,14 @@ public class SensorValue {
     Boolean waterLeak;
     Boolean occupancy;
     Float illuminance;
+
+    public String getZigbeeId() {
+        return zigbeeId;
+    }
+
+    public void setZigbeeId(final String zigbeeId) {
+        this.zigbeeId = zigbeeId;
+    }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
@@ -132,12 +141,13 @@ public class SensorValue {
 
     @Override
     public String toString() {
-        return "SensorValue{" + "timestamp=" + timestamp + ", airQuality='" +
-                airQuality + '\'' + ", battery=" + battery + ", batteryLow=" +
-                batteryLow + ", deviceTemperature=" + deviceTemperature +
-                ", humidity=" + humidity + ", temperature=" + temperature +
-                ", voc=" + voc + ", linkQuality=" + linkQuality + ", tamper=" +
-                tamper + ", waterLeak=" + waterLeak + ", occupancy=" +
-                occupancy + ", illuminance=" + illuminance + '}';
+        return "SensorValue{" + "zigbeeId='" + zigbeeId + '\'' +
+                ", timestamp=" + timestamp + ", airQuality='" + airQuality +
+                '\'' + ", battery=" + battery + ", batteryLow=" + batteryLow +
+                ", deviceTemperature=" + deviceTemperature + ", humidity=" +
+                humidity + ", temperature=" + temperature + ", voc=" + voc +
+                ", linkQuality=" + linkQuality + ", tamper=" + tamper +
+                ", waterLeak=" + waterLeak + ", occupancy=" + occupancy +
+                ", illuminance=" + illuminance + '}';
     }
 }

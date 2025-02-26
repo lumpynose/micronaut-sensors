@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +24,14 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
             LoggerFactory.getLogger(ZigbeeListener.class);
 
     @Inject
-    JsonMapper jsonMapper;
-
-    SensorValue message;
-    Map<String, SensorValue> messages =
-            Collections.synchronizedMap(new HashMap<>());
+    private ApplicationEventPublisher<MessageReceivedEvent> eventPublisher;
 
     @Inject
-    ApplicationEventPublisher<MessageReceivedEvent> eventPublisher;
+    private JsonMapper jsonMapper;
+
+    private SensorValue message;
+    private Map<String, SensorValue> messages =
+            Collections.synchronizedMap(new HashMap<>());
 
     @SuppressWarnings("unused")
     @Topic(value = "zigbee2mqtt/sensors/+")
@@ -42,17 +43,19 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
             return;
         }
 
-        String sensorName = topic.lastIndexOf('/') == -1 ? topic :
+        String zigbeeId = topic.lastIndexOf('/') == -1 ? topic :
                 topic.substring(topic.lastIndexOf('/') + 1);
 
-        log.info("topic: {}, sensorName: {}", topic, sensorName);
+        log.info("topic: {}, sensorName: {}", topic, zigbeeId);
         log.info("data: {}", new String(data, StandardCharsets.UTF_8));
 
         message = jsonMapper.readValue(data, SensorValue.class);
-
-        messages.put(sensorName, message);
+        message.setTimestamp(LocalDateTime.now());
+        message.setZigbeeId(zigbeeId);
 
         log.info("message: {}", message);
+
+        messages.put(zigbeeId, message);
 
         eventPublisher.publishEvent(new MessageReceivedEvent(message));
     }
@@ -64,7 +67,6 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
     }
 
     @SuppressWarnings("unused")
-    @Nullable
     public Map<String, SensorValue> getMessages() {
         return messages;
     }

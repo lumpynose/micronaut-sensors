@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller("/")
-class ViewsTopController {
+class HomeController {
     private static final Logger log =
-            LoggerFactory.getLogger(ViewsTopController.class);
+            LoggerFactory.getLogger(HomeController.class);
 
     @View("home")
     @Get("/")

@@ -21,4 +21,9 @@ public class SampleEventListener {
     public void onShutdownEvent(ShutdownEvent event) {
         log.info("onShutdownEven");
     }
+
+    @EventListener
+    public void onMessageReceivedEvent(MessageReceivedEvent event) {
+        log.info("onMessageReceivedEvent: event: {}", event.getSensorValue());
+    }
 }
