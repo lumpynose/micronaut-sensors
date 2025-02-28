@@ -1,6 +1,6 @@
 package com.objecteffects.sensors.controller;
 
-import com.objecteffects.sensors.listener.SensorValue;
+import com.objecteffects.sensors.listener.SensorValues;
 import com.objecteffects.sensors.listener.ZigbeeListener;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.util.CollectionUtils;
@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 @Controller("/sensors")
-class ViewsModelController {
+class SensorsController {
     private static final Logger log =
-            LoggerFactory.getLogger(ViewsModelController.class);
+            LoggerFactory.getLogger(SensorsController.class);
 
     @Inject
     private ApplicationContext applicationContext;
@@ -31,9 +31,9 @@ class ViewsModelController {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());
 
-        final Map<String, SensorValue> messages = zigbeeListener.getMessages();
+        final Map<String, SensorValues> messages = zigbeeListener.getMessages();
 
-        log.info("messages: {}", messages);
+        log.info("messages: {}", messages.size());
 
         return HttpResponse.ok(CollectionUtils.mapOf("sensors", messages));
     }

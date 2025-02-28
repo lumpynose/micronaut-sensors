@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta content="15" http-equiv="refresh">
     <title>Sensor</title>
 </head>
 <body>
 <section>
     <h2>Sensors h2</h2>
-    <div th:each="sensor : ${sensors}">
-        <div>
-            <span th:text="${sensor.key}">Sensor data</span>
-            <br/>
-            <span th:text="${sensor.value.temperature}">Sensor data</span>
+    <div th:class="main-grid" th:each="sensor : ${sensors}">
+        <div th:class="sensor-grid">
+            <div th:class="id" th:text="${sensor.value.zigbeeId}">Zigbee Id</div>
+            <span th:text="${sensor.value.timestamp}">Timestamp</span>
+            <div th:class="temperature">
+                <div>Temperature</div>
+                <div th:text="${sensor.value.temperature}">Temperature</div>
+            </div>
+            <div th:class="humidity" th:if="${sensor.value.humidity}">
+                <div>Humidity</div>
+                <div th:text="${sensor.value.humidity}">Humidity</div>
+            </div>
+            <div th:class="airQuality" th:if="${sensor.value.airQuality}">
+                <div>Air quality</div>
+                <div th:text="${sensor.value.airQuality}"></div>
+            </div>
         </div>
+    </div>
     </div>
 </section>
 </body>

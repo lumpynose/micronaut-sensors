@@ -3,9 +3,10 @@
 <head>
     <link href="/css/stylesheet.css" rel="stylesheet">
     <script src="/js/htmx-2.0.4.js"></script>
+    <script src="/js/htmx-ext-sse-2.2.2.js"></script>
     <title th:replace="${title}">Layout Title</title>
 </head>
-<body>
+<body hx-ext="sse">
 <h1>Layout h1</h1>
 <div th:replace="${content}">
     <p>Layout content</p>

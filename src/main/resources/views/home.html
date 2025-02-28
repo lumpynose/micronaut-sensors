@@ -6,9 +6,17 @@
 <body>
 <section>
     <h2>Sensor</h2>
-    <p>
-        <a th:href="@{sensors}">View sensor data</a>
-    </p>
+    <ul>
+        <li>
+            <a th:href="@{/sensors}">View sensor data</a>
+        </li>
+        <li>
+            <a th:href="@{/htmx}">Simple htmx example</a>
+        </li>
+        <li>
+            <a th:href="@{/htmx/htmx-sse}">Simple htmx SSE example</a>
+        </li>
+    </ul>
 </section>
 </body>
 </html>

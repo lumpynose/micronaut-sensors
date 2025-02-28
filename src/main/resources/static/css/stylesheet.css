@@ -1,6 +1,38 @@
 footer {
+    border: 2px solid midnightblue;
     margin-top: 1em;
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
+}
+
+.main-grid {
+    display: flex;
+    border: 2px dotted cadetblue;
+    row-gap: 0.2em;
+}
+
+.main-grid * {
+    text-align: center;
+}
+
+.sensor-grid {
+    margin-bottom: 0.5em;
+}
+
+.main-grid .id {
+    border: 2px solid greenyellow;
+}
+
+.main-grid .temperature {
+    border: 2px dashed darkred;
+}
+
+.main-grid .timestamp {
+    border: 2px solid coral;
+}
+
+.main-grid .humidity {
+    border: 2px solid teal;
+}
+
+.main-grid .airQuality {
+    border: 2px dotted purple;
 }

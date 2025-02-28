@@ -1,15 +1,20 @@
 package com.objecteffects.sensors.listener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Serdeable
-public class SensorValue {
+public class SensorValues {
     String zigbeeId;
-    LocalDateTime timestamp;
-    @JsonProperty("airquality")
+    String timestamp;
+    String name;
+    @JsonProperty("air_quality")
     String airQuality;
     Float battery;
     @JsonProperty("batterylow")
@@ -27,6 +32,14 @@ public class SensorValue {
     Boolean occupancy;
     Float illuminance;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
     public String getZigbeeId() {
         return zigbeeId;
     }
@@ -35,12 +48,14 @@ public class SensorValue {
         this.zigbeeId = zigbeeId;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
     public void setTimestamp(final LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM HH:mm");
+
+        this.timestamp = timestamp.format(formatter);
     }
 
     public String getAirQuality() {
@@ -141,13 +156,23 @@ public class SensorValue {
 
     @Override
     public String toString() {
-        return "SensorValue{" + "zigbeeId='" + zigbeeId + '\'' +
-                ", timestamp=" + timestamp + ", airQuality='" + airQuality +
-                '\'' + ", battery=" + battery + ", batteryLow=" + batteryLow +
-                ", deviceTemperature=" + deviceTemperature + ", humidity=" +
-                humidity + ", temperature=" + temperature + ", voc=" + voc +
-                ", linkQuality=" + linkQuality + ", tamper=" + tamper +
-                ", waterLeak=" + waterLeak + ", occupancy=" + occupancy +
-                ", illuminance=" + illuminance + '}';
+        final StringBuilder sb = new StringBuilder("SensorValue{");
+        sb.append("zigbeeId='").append(zigbeeId).append('\'');
+        sb.append(", timestamp=").append(timestamp);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", airQuality='").append(airQuality).append('\'');
+        sb.append(", battery=").append(battery);
+        sb.append(", batteryLow=").append(batteryLow);
+        sb.append(", deviceTemperature=").append(deviceTemperature);
+        sb.append(", humidity=").append(humidity);
+        sb.append(", temperature=").append(temperature);
+        sb.append(", voc=").append(voc);
+        sb.append(", linkQuality=").append(linkQuality);
+        sb.append(", tamper=").append(tamper);
+        sb.append(", waterLeak=").append(waterLeak);
+        sb.append(", occupancy=").append(occupancy);
+        sb.append(", illuminance=").append(illuminance);
+        sb.append('}');
+        return sb.toString();
     }
 }

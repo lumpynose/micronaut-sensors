@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +30,8 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
     @Inject
     private JsonMapper jsonMapper;
 
-    private SensorValue message;
-    private Map<String, SensorValue> messages =
+    private SensorValues message;
+    private Map<String, SensorValues> messages =
             Collections.synchronizedMap(new HashMap<>());
 
     @SuppressWarnings("unused")
@@ -49,7 +50,7 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
         log.info("topic: {}, sensorName: {}", topic, zigbeeId);
         log.info("data: {}", new String(data, StandardCharsets.UTF_8));
 
-        message = jsonMapper.readValue(data, SensorValue.class);
+        message = jsonMapper.readValue(data, SensorValues.class);
         message.setTimestamp(LocalDateTime.now());
         message.setZigbeeId(zigbeeId);
 
@@ -62,12 +63,12 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
 
     @SuppressWarnings("unused")
     @Nullable
-    public SensorValue getMessage() {
+    public SensorValues getMessage() {
         return message;
     }
 
     @SuppressWarnings("unused")
-    public Map<String, SensorValue> getMessages() {
+    public Map<String, SensorValues> getMessages() {
         return messages;
     }
 
