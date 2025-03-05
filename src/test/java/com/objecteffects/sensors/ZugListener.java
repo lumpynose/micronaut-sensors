@@ -1,5 +1,6 @@
 package com.objecteffects.sensors;
 
+import com.objecteffects.sensors.listener.MqttListener;
 import io.micronaut.mqtt.annotation.Topic;
 import jakarta.annotation.Nullable;
 import org.slf4j.Logger;
@@ -9,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 //@MqttSubscriber
 public class ZugListener {
-    private static final Logger log = LoggerFactory.getLogger(
-            com.objecteffects.sensors.listener.ZigbeeListener.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(MqttListener.class);
     String retval = null;
 
     @SuppressWarnings("unused")

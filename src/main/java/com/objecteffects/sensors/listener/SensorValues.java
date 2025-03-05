@@ -1,17 +1,15 @@
 package com.objecteffects.sensors.listener;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @Serdeable
 public class SensorValues {
     String zigbeeId;
+    String rtl433Id;
     String timestamp;
     String name;
     @JsonProperty("air_quality")
@@ -23,14 +21,25 @@ public class SensorValues {
     Float deviceTemperature;
     Float humidity;
     Float temperature;
+    @JsonProperty("temperature_F")
+    Float temperatureF;
     Float voc;
     @JsonProperty("linkquality")
     Float linkQuality;
     Boolean tamper;
-    @JsonProperty("waterleak")
+    @JsonProperty("water_leak")
     Boolean waterLeak;
+    @JsonProperty("occupancy")
     Boolean occupancy;
     Float illuminance;
+
+    public Float getTemperatureF() {
+        return temperatureF;
+    }
+
+    public void setTemperatureF(final Float temperatureF) {
+        this.temperatureF = temperatureF;
+    }
 
     public String getName() {
         return name;
@@ -38,6 +47,14 @@ public class SensorValues {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getRtl433Id() {
+        return rtl433Id;
+    }
+
+    public void setRtl433Id(final String rtl433Id) {
+        this.rtl433Id = rtl433Id;
     }
 
     public String getZigbeeId() {
@@ -53,7 +70,8 @@ public class SensorValues {
     }
 
     public void setTimestamp(final LocalDateTime timestamp) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM HH:mm");
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd MMM HH:mm");
 
         this.timestamp = timestamp.format(formatter);
     }
@@ -156,9 +174,10 @@ public class SensorValues {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SensorValue{");
+        final StringBuilder sb = new StringBuilder("SensorValues{");
         sb.append("zigbeeId='").append(zigbeeId).append('\'');
-        sb.append(", timestamp=").append(timestamp);
+        sb.append(", rtl433Id='").append(rtl433Id).append('\'');
+        sb.append(", timestamp='").append(timestamp).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", airQuality='").append(airQuality).append('\'');
         sb.append(", battery=").append(battery);
@@ -166,6 +185,7 @@ public class SensorValues {
         sb.append(", deviceTemperature=").append(deviceTemperature);
         sb.append(", humidity=").append(humidity);
         sb.append(", temperature=").append(temperature);
+        sb.append(", temperatureF=").append(temperatureF);
         sb.append(", voc=").append(voc);
         sb.append(", linkQuality=").append(linkQuality);
         sb.append(", tamper=").append(tamper);

@@ -1,6 +1,6 @@
 package com.objecteffects.sensors;
 
-import com.objecteffects.sensors.listener.ZigbeeListener;
+import com.objecteffects.sensors.listener.MqttListener;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @MicronautTest
-public class ZigbeeListenerTest {
+public class MqttListenerTest {
     private static final Logger log =
-            LoggerFactory.getLogger(ZigbeeListenerTest.class);
+            LoggerFactory.getLogger(MqttListenerTest.class);
 
     @Inject
-    ZigbeeListener client;
+    MqttListener client;
 
     @Test
     void testZigbeeListener() throws InterruptedException {

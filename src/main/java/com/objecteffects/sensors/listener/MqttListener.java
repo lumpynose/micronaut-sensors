@@ -1,5 +1,6 @@
 package com.objecteffects.sensors.listener;
 
+import com.objecteffects.sensors.controller.TUnit;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.json.JsonMapper;
 import io.micronaut.mqtt.annotation.MqttSubscriber;
@@ -14,15 +15,14 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @MqttSubscriber
-public class ZigbeeListener implements MqttSubscriberExceptionHandler {
+public class MqttListener implements MqttSubscriberExceptionHandler {
     private static final Logger log =
-            LoggerFactory.getLogger(ZigbeeListener.class);
+            LoggerFactory.getLogger(MqttListener.class);
 
     @Inject
     private ApplicationEventPublisher<MessageReceivedEvent> eventPublisher;
@@ -35,8 +35,8 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
             Collections.synchronizedMap(new HashMap<>());
 
     @SuppressWarnings("unused")
-    @Topic(value = "zigbee2mqtt/sensors/+")
-    public void receive(@Nullable byte[] data, @Topic String topic)
+    @Topic(value = "sensors/zigbee/+")
+    public void receiveZigbee(@Nullable byte[] data, @Topic String topic)
             throws IOException {
         if (data == null) {
             log.info("data is null");
@@ -47,16 +47,48 @@ public class ZigbeeListener implements MqttSubscriberExceptionHandler {
         String zigbeeId = topic.lastIndexOf('/') == -1 ? topic :
                 topic.substring(topic.lastIndexOf('/') + 1);
 
-        log.info("topic: {}, sensorName: {}", topic, zigbeeId);
+        Long id = Long.parseLong(zigbeeId.substring(2), 16);
+
+        log.info("topic: {}, zigbeeId: {} ({})", topic, zigbeeId, id);
         log.info("data: {}", new String(data, StandardCharsets.UTF_8));
 
         message = jsonMapper.readValue(data, SensorValues.class);
         message.setTimestamp(LocalDateTime.now());
         message.setZigbeeId(zigbeeId);
+        message.setTemperature(
+                (float) (TUnit.Fahrenheit.convert(message.temperature)));
 
         log.info("message: {}", message);
 
         messages.put(zigbeeId, message);
+
+        eventPublisher.publishEvent(new MessageReceivedEvent(message));
+    }
+
+    @SuppressWarnings("unused")
+    @Topic(value = "sensors/rtl_433/+")
+    public void receiveRtl433(@Nullable byte[] data, @Topic String topic)
+            throws IOException {
+        if (data == null) {
+            log.info("data is null");
+
+            return;
+        }
+
+        String rtl433Id = topic.lastIndexOf('/') == -1 ? topic :
+                topic.substring(topic.lastIndexOf('/') + 1);
+
+        log.info("topic: {}, rtl433Id: {}", topic, rtl433Id);
+        log.info("data: {}", new String(data, StandardCharsets.UTF_8));
+
+        message = jsonMapper.readValue(data, SensorValues.class);
+        message.setTimestamp(LocalDateTime.now());
+        message.setRtl433Id(rtl433Id);
+        message.setTemperature(message.temperatureF);
+
+        log.info("message: {}", message);
+
+        messages.put(rtl433Id, message);
 
         eventPublisher.publishEvent(new MessageReceivedEvent(message));
     }

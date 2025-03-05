@@ -1,7 +1,7 @@
 package com.objecteffects.sensors.controller;
 
+import com.objecteffects.sensors.listener.MqttListener;
 import com.objecteffects.sensors.listener.SensorValues;
-import com.objecteffects.sensors.listener.ZigbeeListener;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
@@ -23,7 +23,7 @@ class SensorsController {
     private ApplicationContext applicationContext;
 
     @Inject
-    private ZigbeeListener zigbeeListener;
+    private MqttListener mqttListener;
 
     @View("sensors")
     @Get("/")
@@ -31,7 +31,7 @@ class SensorsController {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());
 
-        final Map<String, SensorValues> messages = zigbeeListener.getMessages();
+        final Map<String, SensorValues> messages = mqttListener.getMessages();
 
         log.info("messages: {}", messages.size());
 

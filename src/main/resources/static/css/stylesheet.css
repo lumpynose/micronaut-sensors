@@ -3,36 +3,35 @@ footer {
     margin-top: 1em;
 }
 
-.main-grid {
+.main-box {
     display: flex;
-    border: 2px dotted cadetblue;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-evenly;
     row-gap: 0.2em;
+    /*background-color: rgba(255, 0, 0, 0.1);*/
 }
 
-.main-grid * {
-    text-align: center;
-}
-
-.sensor-grid {
+.sensor-box {
     margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-.main-grid .id {
-    border: 2px solid greenyellow;
+.sensor-box .id, .timestamp, .temperature, .humidity, .airQuality, .waterLeak, .occupancy {
+    text-align: center;
+    border: 1px solid black;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
-.main-grid .temperature {
-    border: 2px dashed darkred;
+.sensor-box .id {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-.main-grid .timestamp {
-    border: 2px solid coral;
-}
-
-.main-grid .humidity {
-    border: 2px solid teal;
-}
-
-.main-grid .airQuality {
-    border: 2px dotted purple;
+.value {
+    font-weight: bold;
 }
