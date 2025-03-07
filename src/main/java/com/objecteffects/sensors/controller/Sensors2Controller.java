@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-@Controller("/sensors")
-class SensorsController {
+@Controller("/sensors2")
+class Sensors2Controller {
     private static final Logger log =
-            LoggerFactory.getLogger(SensorsController.class);
+            LoggerFactory.getLogger(Sensors2Controller.class);
 
     @Inject
     private ApplicationContext applicationContext;
@@ -25,9 +25,8 @@ class SensorsController {
     @Inject
     private MqttListener mqttListener;
 
-    @View("sensors")
-//    @Get("/")
-    @Get
+    @View("sensors2")
+    @Get("/")
     public HttpResponse<?> index() {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());

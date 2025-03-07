@@ -1,4 +1,4 @@
-package com.objecteffects.sensors.db;
+package com.objecteffects.sensors.db1;
 
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotNull;

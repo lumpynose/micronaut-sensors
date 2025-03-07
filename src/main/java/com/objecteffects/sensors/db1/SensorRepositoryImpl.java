@@ -1,4 +1,4 @@
-package com.objecteffects.sensors.db;
+package com.objecteffects.sensors.db1;
 
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;

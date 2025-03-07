@@ -1,4 +1,4 @@
-package com.objecteffects.sensors.db;
+package com.objecteffects.sensors.db1;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

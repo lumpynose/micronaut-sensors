@@ -1,5 +1,5 @@
 footer {
-    border: 2px solid midnightblue;
+    border: 1px solid midnightblue;
     margin-top: 1em;
 }
 
@@ -11,7 +11,6 @@ footer {
     align-items: center;
     align-content: space-evenly;
     row-gap: 0.2em;
-    /*background-color: rgba(255, 0, 0, 0.1);*/
 }
 
 .sensor-box {
@@ -21,7 +20,8 @@ footer {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.sensor-box .id, .timestamp, .temperature, .humidity, .airQuality, .waterLeak, .occupancy {
+/*.sensor-box .id, .timestamp, .temperature, .humidity, .airQuality, .waterLeak, .occupancy {*/
+.sensor-box > div {
     text-align: center;
     border: 1px solid black;
     padding-left: 1em;
@@ -29,7 +29,7 @@ footer {
 }
 
 .sensor-box .id {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(190, 190, 0, 0.2);
 }
 
 .value {
