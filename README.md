@@ -1,4 +1,4 @@
-## Micronaut 4.7.6 Documentation
+## This project uses Micronaut 4.7.6
 
 - [User Guide](https://docs.micronaut.io/4.7.6/guide/index.html)
 - [API Reference](https://docs.micronaut.io/4.7.6/api/index.html)
