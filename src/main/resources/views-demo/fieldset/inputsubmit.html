@@ -1,0 +1,7 @@
+<th:block th:fragment="inputsubmit(el)" xmlns:th="http://www.thymeleaf.org">
+    <input class="btn btn-primary" th:if="${el.value().code() != null}"
+           th:value="${#strings.defaultString(#messages.msgOrNull(el.value().code()),el.value().defaultMessage())}"
+           type="submit"/><input
+        class="btn btn-primary" th:unless="${el.value().code() != null}"
+        th:value="${el.value().defaultMessage()}" type="submit"/>
+</th:block>

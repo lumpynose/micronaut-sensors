@@ -1,0 +1,6 @@
+<th:block th:fragment="trixeditor(el)" xmlns:th="http://www.thymeleaf.org">
+    <label th:replace="~{fieldset/label :: label(${el.id()},${el.label()})}"/><input
+        th:id="${el.id()}" th:name="${el.name()}" th:value="${el.value()}"
+        type="hidden"/>
+    <trix-editor th:input="${el.id()}"></trix-editor>
+</th:block>

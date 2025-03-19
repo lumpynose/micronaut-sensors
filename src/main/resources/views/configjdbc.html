@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html data-th-replace="~{layoutFile :: layout(~{::title}, ~{::section}, ~{})}"
+      lang="en">
+<head>
+    <title>Sensors Title</title>
+    <meta content="15" data-th-fragment="refresh" http-equiv="refresh">
+</head>
+<body>
+<section>
+    <h2>Sensors Config h2</h2>
+    <div data-th-class="main-box-cfg" data-th-each="sensor : ${sensors}">
+        <div data-th-class="sensor-box">
+            <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
+                <a data-th-href="@{/configjdbc/edit(sensorId=${sensor.sensorId}, channel=${sensor.channel})}"
+                   href="/configjdbc/edit/">
+                    <span data-th-text="${sensor.sensorId}">
+                        Sensor Id
+                    </span><span data-th-if="${sensor.channel}"
+                                 data-th-text="'[' + ${sensor.channel} + ']'">0</span></a>
+            </div>
+            <div data-th-class="protocol" data-th-if="${sensor.protocol}">
+                <div>Protocol</div>
+                <div data-th-class="value"
+                     data-th-text="${sensor.protocol}">
+                    Protocol
+                </div>
+            </div>
+            <div data-th-class="name" data-th-if="${sensor.name}">
+                <div>Name</div>
+                <div data-th-class="value" data-th-text="${sensor.name}">
+                    Rtl433
+                    Name
+                </div>
+            </div>
+            <div data-th-class="ignore" data-th-if="${sensor.ignore}">
+                <div>Ignored</div>
+                <div data-th-class="value" data-th-text="${sensor.ignore}">
+                    Ignored
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

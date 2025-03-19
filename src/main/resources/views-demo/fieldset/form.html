@@ -1,0 +1,8 @@
+<th:block th:fragment="form(form)" xmlns:th="http://www.thymeleaf.org">
+    <form th:action="${form.action()}" th:data-turbo="${form.dataturbo()}"
+          th:enctype="${form.enctype()}" th:method="${form.method()}">
+        <fieldset
+                th:replace="~{fieldset/fieldset :: fieldset(${form.fieldset()})}">
+        </fieldset>
+    </form>
+</th:block>

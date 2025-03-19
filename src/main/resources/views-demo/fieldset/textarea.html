@@ -1,0 +1,11 @@
+<th:block th:fragment="textarea(el)" xmlns:th="http://www.thymeleaf.org"><label
+        th:replace="~{fieldset/label :: label(${el.id()},${el.label()})}"/><textarea
+        class="form-control"
+        th:attr="aria-describedby=${el.hasErrors}?|${el.name}ValidationServerFeedback|"
+        th:classappend="${el.hasErrors()} ? is-invalid"
+        th:cols="${el.cols()}" th:id="${el.id()}" th:name="${el.name()}"
+        th:rows="${el.rows()}"
+        th:text="${el.value()}"/>
+    <div th:if="${el.hasErrors()}"
+         th:replace="~{fieldset/errors :: errors(${el.name()}, ${el.errors()})}"></div>
+</th:block>

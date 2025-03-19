@@ -1,0 +1,10 @@
+<th:block th:fragment="option(el)" xmlns:th="http://www.thymeleaf.org">
+    <option th:disabled="${el.disabled()}" th:if="${el.label().code() != null}"
+            th:selected="${el.selected()}"
+            th:text="${#strings.defaultString(#messages.msgOrNull(el.label().code()),el.label().defaultMessage())}"
+            th:value="${el.value()}"></option>
+    <option th:disabled="${el.disabled()}" th:selected="${el.selected()}"
+            th:text="${el.label().defaultMessage()}"
+            th:unless="${el.label().code() != null}"
+            th:value="${el.value()}"></option>
+</th:block>

@@ -1,0 +1,8 @@
+<th:block th:fragment="label(id, el)" xmlns:th="http://www.thymeleaf.org"><label
+        class="form-label" th:for="${id != null ? id : null}"
+        th:if="${el.code()}"
+        th:text="${#strings.defaultString(#messages.msgOrNull(el.code()),el.defaultMessage())}"></label><label
+        class="form-label"
+        th:for="${id != null ? id : null}"
+        th:text="${el.defaultMessage()}"
+        th:unless="${el.code()}"></label></th:block>

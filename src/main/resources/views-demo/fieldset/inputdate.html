@@ -1,0 +1,12 @@
+<th:block th:fragment="inputdate(el)" xmlns:th="http://www.thymeleaf.org"><label
+        th:replace="~{fieldset/label :: label(${el.id()}, ${el.label()})}"></label><input
+        class="form-control"
+        th:attr="aria-describedby=${el.hasErrors}?|${el.name}ValidationServerFeedback|"
+        th:classappend="${el.hasErrors()} ? is-invalid"
+        th:id="${el.id()}" th:max="${el.max()}" th:min="${el.min()}"
+        th:name="${el.name()}" th:required="${el.required()}"
+        th:step="${el.step()}" th:type="date"
+        th:value="${el.value()}"/>
+    <div th:if="${el.hasErrors()}"
+         th:replace="~{fieldset/errors :: errors(${el.name()}, ${el.errors()})}"></div>
+</th:block>

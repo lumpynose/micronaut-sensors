@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{layoutFile :: layout(~{::title}, ~{::section}, ~{})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SensorDb1</title>
+</head>
+<body>
+<section>
+    <h2>SensorDb1</h2>
+    <ul>
+        <li>
+            <a th:href="@{/sensor}">View sensor data</a>
+        </li>
+        <li>
+            <a th:href="@{/htmx}">Simple htmx example</a>
+        </li>
+        <li>
+            <a th:href="@{/htmx/htmx-sse}">Simple htmx SSE example</a>
+        </li>
+    </ul>
+</section>
+</body>
+</html>

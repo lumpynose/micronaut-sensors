@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html data-th-replace="~{layoutFile :: layout(~{::title}, ~{::section}, ~{})}"
+      lang="en">
+<head>
+    <title>Sensors Title</title>
+</head>
+<body>
+<section>
+    <h2>Sensor Edit</h2>
+    <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
+        <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
+            <span data-th-text="${sensor.sensorId}">Sensor Id
+            </span><span data-th-if="${sensor.channel} != ''"
+                         data-th-text="'[' + ${sensor.channel} + ']'">0</span>
+        </div>
+    </div>
+    <form action="/configjdbc/submit" method="post">
+        <div>
+            <p>
+                <label for="name">name:</label>
+                <input id="name" name="name" type="text" value="NAME"/>
+            </p>
+            <p>
+                <label for="ignore">ignore:</label>
+                <input id="ignore" name="ignore" type="checkbox"/>
+            </p>
+            <input id="sensorId" name="sensorId" type="text" hidden="true"
+                   value="sensorId"
+                   data-th-value="${sensor.sensorId} "/>
+            <input id="channel" name="channel" type="text" hidden="true"
+                   value="channel"
+                   data-th-value="${sensor.channel}"/>
+            <input type="submit" value="Submit"/>
+        </div>
+    </form>
+</section>
+</body>
+</html>

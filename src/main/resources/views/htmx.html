@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Htmx</title>
+</head>
+<body>
+<section>
+    <h2>Htmx</h2>
+    <p>
+        <button hx-swap="outerHTML" hx-trigger="click"
+                th:hx-get="@{/htmx/clicked}">
+            Click Me
+        </button>
+    </p>
+</section>
+</body>
+</html>

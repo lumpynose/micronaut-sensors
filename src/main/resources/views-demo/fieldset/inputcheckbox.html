@@ -1,0 +1,15 @@
+<th:block th:fragment="inputcheckbox(el)" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:if="${el.label() && el.checkboxes().size() > 1}"><label
+            th:replace="~{fieldset/label :: label(null, ${el.label()})}"></label>
+    </th:block>
+    <div class="form-check" th:each="checkbox : ${el.checkboxes()}"><input
+            class="form-check-input" th:checked="${checkbox.checked()}"
+            th:classappend="${el.hasErrors() ? 'is-invalid' : ''}"
+            th:disabled="${checkbox.disabled()}"
+            th:id="${checkbox.id()}" th:name="${checkbox.name()}"
+            th:required="${checkbox.required()}"
+            th:value="${checkbox.value()}"
+            type="checkbox"/><label
+            th:replace="~{fieldset/label :: label(${checkbox.id()}, ${checkbox.label()})}"></label>
+    </div>
+</th:block>

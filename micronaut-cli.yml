@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.example
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [ app-name, data, data-jdbc, flyway, h2, http-client-test, java, java-application, jdbc-dbcp, junit, logback, management, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, mqtt, netty-server, properties, readme, serialization-jackson, shade, static-resources, test-resources, validation, views-fieldset, views-thymeleaf ]

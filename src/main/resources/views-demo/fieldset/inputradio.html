@@ -1,0 +1,6 @@
+<input class="form-check-input" th:checked="${radio.checked()}"
+       th:disabled="${radio.disabled()}" th:fragment="inputradio(el,radio)"
+       th:id="${radio.id()}"
+       th:name="${el.name()}" th:required="${el.required()}"
+       th:value="${radio.value()}" type="radio"
+       xmlns:th="http://www.thymeleaf.org"/>

@@ -1,0 +1,10 @@
+<th:block th:fragment="inputfile(el)" xmlns:th="http://www.thymeleaf.org"><label
+        th:replace="~{fieldset/label :: label(${el.id()}, ${el.label()})}"></label><input
+        class="form-control" th:accept="${el.accept()}"
+        th:attr="aria-describedby=${el.hasErrors}?|${el.name}ValidationServerFeedback|"
+        th:classappend="${el.hasErrors()} ? is-invalid" th:id="${el.id()}"
+        th:name="${el.name()}" th:required="${el.required()}"
+        th:type="file"/>
+    <div th:if="${el.hasErrors()}"
+         th:replace="~{fieldset/errors :: errors(${el.name()}, ${el.errors()})}"></div>
+</th:block>
