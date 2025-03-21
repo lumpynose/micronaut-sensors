@@ -1,7 +1,7 @@
 package com.objecteffects.sensors.controller;
 
 import com.objecteffects.sensors.listener.MqttListener;
-import com.objecteffects.sensors.listener.SensorValues;
+import com.objecteffects.sensors.listener.SensorValue;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
@@ -11,7 +11,7 @@ import io.micronaut.views.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
+import java.util.Collection;
 
 @Controller("/sensorsjdbc")
 class SensorsJdbcController {
@@ -32,10 +32,12 @@ class SensorsJdbcController {
         log.info("sensor: active names: {}",
                 applicationContext.getEnvironment().getActiveNames());
 
-        final Map<String, SensorValues> messages = mqttListener.getMessages();
+        final Collection<SensorValue> sensorvalues =
+                mqttListener.getSensorvalues();
 
-        log.info("messages: {}", messages.size());
+        log.info("messages: {}", sensorvalues);
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensors", messages));
+        return HttpResponse.ok(
+                CollectionUtils.mapOf("sensorvalues", sensorvalues));
     }
 }

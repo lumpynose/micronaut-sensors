@@ -1,5 +1,6 @@
 package com.objecteffects.sensors.jdbc;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.DateUpdated;
@@ -28,7 +29,10 @@ public class Sensor {
      * sensorId is how the sensor identifies itself.  Hex number for zigbee,
      * string for 433mhz.
      */
+    @NonNull
     private String sensorId;
+
+    @NonNull
     private String protocol;
 
     @Nullable
@@ -38,13 +42,17 @@ public class Sensor {
     @Nullable
     private Boolean ignore;
 
-    public Sensor(String sensorId, String channel) {
+    public Sensor(@NonNull String sensorId, @Nullable String channel) {
         this.sensorId = sensorId;
         this.channel = channel;
     }
 
-    public Sensor(String sensorId, String protocol, String channel) {
-
+    public Sensor(
+            @NonNull String sensorId,
+            @NonNull String protocol, @NonNull String channel) {
+        this.sensorId = sensorId;
+        this.protocol = protocol;
+        this.channel = channel;
     }
 
     private Sensor(Builder builder) {
@@ -66,19 +74,19 @@ public class Sensor {
             return new Sensor(this);
         }
 
-        public Builder sensorId(String sensorId) {
+        public Builder sensorId(@NonNull String sensorId) {
             this.sensorId = sensorId;
 
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(@NonNull String name) {
             this.name = name;
 
             return this;
         }
 
-        public Builder channel(String channel) {
+        public Builder channel(@NonNull String channel) {
             this.channel = channel;
 
             return this;
@@ -90,7 +98,7 @@ public class Sensor {
             return this;
         }
 
-        public Builder protocol(String protocol) {
+        public Builder protocol(@NonNull String protocol) {
             this.protocol = protocol;
 
             return this;
@@ -145,6 +153,7 @@ public class Sensor {
         this.sensorId = sensorId;
     }
 
+    @NonNull
     public String getProtocol() {
         return protocol;
     }
@@ -155,6 +164,10 @@ public class Sensor {
 
     public void setChannel(@Nullable final String _channel) {
         channel = _channel;
+    }
+
+    public void setProtocol(@NonNull final String _protocol) {
+        protocol = _protocol;
     }
 
     @Override

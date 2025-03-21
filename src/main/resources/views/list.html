@@ -2,13 +2,14 @@
 <html data-th-replace="~{layoutFile :: layout(~{::title}, ~{::section}, ~{})}"
       lang="en">
 <head>
-    <title>Sensors Title</title>
+    <title>Sensors configuration</title>
     <meta content="15" data-th-fragment="refresh" http-equiv="refresh">
 </head>
 <body>
 <section>
-    <h2>Sensors Config h2</h2>
-    <div data-th-class="main-box-cfg" data-th-each="sensor : ${sensors}">
+    <h2>Sensors Configuration</h2>
+    <div data-th-class="main-box-cfg"
+         data-th-each="sensor : ${sensors}">
         <div data-th-class="sensor-box">
             <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
                 <a data-th-href="@{/configjdbc/edit(sensorId=${sensor.sensorId}, channel=${sensor.channel})}"

@@ -2,7 +2,6 @@ package com.objecteffects.sensors.controller;
 
 import com.objecteffects.sensors.jdbc.Sensor;
 import com.objecteffects.sensors.jdbc.SensorJdbcRepository;
-import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
@@ -14,8 +13,11 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.views.View;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 @ExecuteOn(TaskExecutors.BLOCKING)
 @Controller("/configjdbc")
@@ -24,16 +26,18 @@ public class ConfigJdbcController {
             LoggerFactory.getLogger(ConfigJdbcController.class);
 
     private final SensorJdbcRepository sensorJdbcRepository;
-    private final ApplicationContext applicationContext;
 
-    public ConfigJdbcController(SensorJdbcRepository _sensorJdbcRepository, ApplicationContext _applicationContext) {
+    public ConfigJdbcController(SensorJdbcRepository _sensorJdbcRepository) {
         this.sensorJdbcRepository = _sensorJdbcRepository;
-        this.applicationContext = _applicationContext;
     }
 
-    @View("configjdbc")
+    @View("list")
     @Get("/list")
     public HttpResponse<?> list() {
+        List<Sensor> sensors = sensorJdbcRepository.findAll();
+
+        log.info("/list, sensors: {}", sensors);
+
         return HttpResponse.ok(CollectionUtils.mapOf("sensors",
                 sensorJdbcRepository.findAll()));
     }
@@ -44,12 +48,19 @@ public class ConfigJdbcController {
     HttpResponse<?> save(String sensorId, String channel) {
         log.info("sensorId: {}, channel: {}", sensorId, channel);
 
-        Sensor sensor = new Sensor(sensorId, channel);
+        Sensor sensorDb = StringUtils.isNotBlank(channel) ?
+                this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
+                        channel) :
+                this.sensorJdbcRepository.findBySensorId(sensorId);
+
+        log.info("sensorDb: {}", sensorDb);
+
+//        Sensor sensor = new Sensor(sensorId, channel);
 
         // new Sensor.Builder().sensorId(sensorId).channel(channel)
         //    .build();
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensor", sensor));
+        return HttpResponse.ok(CollectionUtils.mapOf("sensor", sensorDb));
     }
 
     @Post("/submit")
@@ -61,6 +72,20 @@ public class ConfigJdbcController {
         log.info("sensorId: {}, name: {}, channel: {}, ignore: {}", sensorId,
                 name, channel, ignore);
 
-        return HttpResponse.ok();
+        Sensor sensorDb = StringUtils.isNotBlank(channel) ?
+                this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
+                        channel) :
+                this.sensorJdbcRepository.findBySensorId(sensorId);
+
+        log.info("sensorDb: {}", sensorDb);
+
+        sensorDb.setName(name);
+        sensorDb.setIgnore(ignore);
+
+        final Sensor sensorSaved = this.sensorJdbcRepository.update(sensorDb);
+
+        log.info("sensorSaved: {}", sensorSaved);
+
+        return HttpResponse.ok(sensorSaved);
     }
 }

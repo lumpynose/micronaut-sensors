@@ -5,11 +5,13 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.StringJoiner;
 
 @Serdeable
-public class SensorValues {
-    String zigbeeId;
-    String rtl433Id;
+public class SensorValue {
+    //    String zigbeeId;
+    //    String rtl433Id;
+    String sensorId;
     String timestamp;
     String name;
     @JsonProperty("air_quality")
@@ -32,7 +34,9 @@ public class SensorValues {
     @JsonProperty("occupancy")
     Boolean occupancy;
     Float illuminance;
+    @JsonProperty("channel")
     String channel;
+    String protocol;
 
     public String getChannel() {
         return channel;
@@ -58,21 +62,21 @@ public class SensorValues {
         this.name = name;
     }
 
-    public String getRtl433Id() {
-        return rtl433Id;
-    }
+//    public String getRtl433Id() {
+//        return rtl433Id;
+//    }
 
-    public void setRtl433Id(final String rtl433Id) {
-        this.rtl433Id = rtl433Id;
-    }
+//    public void setRtl433Id(final String rtl433Id) {
+//        this.rtl433Id = rtl433Id;
+//    }
 
-    public String getZigbeeId() {
-        return zigbeeId;
-    }
+//    public String getZigbeeId() {
+//        return zigbeeId;
+//    }
 
-    public void setZigbeeId(final String zigbeeId) {
-        this.zigbeeId = zigbeeId;
-    }
+//    public void setZigbeeId(final String zigbeeId) {
+//        this.zigbeeId = zigbeeId;
+//    }
 
     public String getTimestamp() {
         return timestamp;
@@ -181,19 +185,39 @@ public class SensorValues {
         this.illuminance = illuminance;
     }
 
+    public String getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(final String _sensorId) {
+        sensorId = _sensorId;
+    }
+
+    public void setTimestamp(final String _timestamp) {
+        timestamp = _timestamp;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(final String _protocol) {
+        protocol = _protocol;
+    }
+
     @Override
     public String toString() {
-        final String sb = "SensorValues{" + "zigbeeId='" + zigbeeId + '\'' +
-                ", rtl433Id='" + rtl433Id + '\'' + ", timestamp='" + timestamp +
-                '\'' + ", name='" + name + '\'' + ", airQuality='" +
-                airQuality + '\'' + ", battery=" + battery + ", batteryLow=" +
-                batteryLow + ", deviceTemperature=" + deviceTemperature +
-                ", humidity=" + humidity + ", temperature=" + temperature +
-                ", temperatureF=" + temperatureF + ", voc=" + voc +
-                ", linkQuality=" + linkQuality + ", tamper=" + tamper +
-                ", waterLeak=" + waterLeak + ", occupancy=" + occupancy +
-                ", illuminance=" + illuminance + ", channel='" + channel +
-                '\'' + '}';
-        return sb;
+        return new StringJoiner(", ", SensorValue.class.getSimpleName() + "[",
+                "]").add("sensorId='" + sensorId + "'")
+                .add("timestamp='" + timestamp + "'").add("name='" + name + "'")
+                .add("airQuality='" + airQuality + "'")
+                .add("battery=" + battery).add("batteryLow=" + batteryLow)
+                .add("deviceTemperature=" + deviceTemperature)
+                .add("humidity=" + humidity).add("temperature=" + temperature)
+                .add("temperatureF=" + temperatureF).add("voc=" + voc)
+                .add("linkQuality=" + linkQuality).add("tamper=" + tamper)
+                .add("waterLeak=" + waterLeak).add("occupancy=" + occupancy)
+                .add("illuminance=" + illuminance)
+                .add("channel='" + channel + "'").toString();
     }
 }

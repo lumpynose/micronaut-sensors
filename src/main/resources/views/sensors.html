@@ -7,49 +7,53 @@
 </head>
 <body>
 <section>
-    <h2>Sensors h2</h2>
-    <div data-th-class="main-box" data-th-each="sensor : ${sensor}">
+    <h2>Sensors</h2>
+    <div data-th-class="main-box" data-th-each="sensorvalue : ${sensorvalues}">
         <div data-th-class="sensor-box">
-            <div data-th-class="id" data-th-if="${sensor.value.zigbeeId}">
-                <div data-th-text="${sensor.value.zigbeeId}">Zigbee Id</div>
+            <div data-th-class="sensorid" data-th-if="${sensorvalue.name}">
+                <span data-th-text="${sensorvalue.name}">Sensor Id</span><span
+                    data-th-if="${sensorvalue.channel} != null"
+                    data-th-text="'[' + ${sensorvalue.channel} + ']'">0</span>
             </div>
-            <div data-th-class="id" data-th-if="${sensor.value.rtl433Id}">
-                <div data-th-text="${sensor.value.rtl433Id}">Rtl433 Id</div>
-            </div>
-            <div data-th-class="timestamp"
-                 data-th-text="${sensor.value.timestamp}">Timestamp
+            <div data-th-class="sensorid" data-th-unless="${sensorvalue.name}">
+                <span data-th-text="${sensorvalue.sensorId}">Sensor Id</span><span
+                    data-th-if="${sensorvalue.channel} != null"
+                    data-th-text="'[' + ${sensorvalue.channel} + ']'">0</span>
             </div>
             <div data-th-class="temperature"
-                 data-th-if="${sensor.value.temperature}">
+                 data-th-if="${sensorvalue.temperature}">
                 <div>Temperature</div>
                 <div data-th-class="value"
-                     data-th-text="${#numbers.formatDecimal(sensor.value.temperature,0,1)}">
+                     data-th-text="${#numbers.formatDecimal(sensorvalue.temperature,0,1)}">
                     Temperature
                 </div>
             </div>
-            <div data-th-class="humidity" data-th-if="${sensor.value.humidity}">
+            <div data-th-class="humidity" data-th-if="${sensorvalue.humidity}">
                 <div>Humidity</div>
                 <div data-th-class="value"
-                     data-th-text="${sensor.value.humidity}">Humidity
+                     data-th-text="${sensorvalue.humidity}">Humidity
                 </div>
             </div>
             <div data-th-class="airQuality"
-                 data-th-if="${sensor.value.airQuality}">
+                 data-th-if="${sensorvalue.airQuality}">
                 <div>Air quality</div>
                 <div data-th-class="value"
-                     data-th-text="${sensor.value.airQuality}"></div>
+                     data-th-text="${sensorvalue.airQuality}"></div>
             </div>
             <div data-th-class="waterLeak"
-                 data-th-if="${sensor.value.waterLeak} != null">
+                 data-th-if="${sensorvalue.waterLeak} != null">
                 <div>Water Leak</div>
                 <div data-th-class="value"
-                     data-th-text="${sensor.value.waterLeak}"></div>
+                     data-th-text="${sensorvalue.waterLeak}"></div>
             </div>
             <div data-th-class="occupancy"
-                 data-th-if="${sensor.value.occupancy}">
+                 data-th-if="${sensorvalue.occupancy}">
                 <div>Occupancy</div>
                 <div data-th-class="value"
-                     data-th-text="${sensor.value.occupancy}"></div>
+                     data-th-text="${sensorvalue.occupancy}"></div>
+            </div>
+            <div data-th-class="timestamp"
+                 data-th-text="${sensorvalue.timestamp}">Timestamp
             </div>
         </div>
     </div>

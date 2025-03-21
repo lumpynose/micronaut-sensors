@@ -1,18 +1,20 @@
 package com.objecteffects.sensors.jdbc;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
 public interface SensorJdbcRepository extends CrudRepository<Sensor, UUID> {
 //    Long update(long id, @NonNull @NotBlank String name);
 
-//    @NonNull
-//    List<SensorJdbc> findAll();
+    @NonNull
+    List<Sensor> findAll();
 
 //    SensorJdbc saveZigbee(Long id);
 
@@ -27,7 +29,7 @@ public interface SensorJdbcRepository extends CrudRepository<Sensor, UUID> {
     Sensor findBySensorId(String sensorId);
 
     @Nullable
-    Sensor findBySensorIdAndChannel(String sensorId, String channel);
+    Sensor findBySensorIdAndChannel(String sensorId, @Nullable String channel);
 
 //    Sensor find(String sensorId);
 

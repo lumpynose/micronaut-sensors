@@ -7,15 +7,15 @@ public class MessageReceivedEvent {
     private static final Logger log =
             LoggerFactory.getLogger(MessageReceivedEvent.class);
 
-    private final SensorValues sensorValues;
+    private final SensorValue sensorValue;
 
-    MessageReceivedEvent(SensorValues _sensorValues) {
-        log.info("sensorValue: {}", _sensorValues.toString());
+    MessageReceivedEvent(SensorValue _sensorValue) {
+        log.info("sensorValue: {}", _sensorValue.toString());
 
-        this.sensorValues = _sensorValues;
+        this.sensorValue = _sensorValue;
     }
 
-    public SensorValues getSensorValue() {
-        return sensorValues;
+    public SensorValue getSensorValue() {
+        return sensorValue;
     }
 }

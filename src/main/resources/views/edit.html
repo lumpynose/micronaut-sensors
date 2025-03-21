@@ -8,11 +8,9 @@
 <section>
     <h2>Sensor Edit</h2>
     <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
-        <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
             <span data-th-text="${sensor.sensorId}">Sensor Id
             </span><span data-th-if="${sensor.channel} != ''"
                          data-th-text="'[' + ${sensor.channel} + ']'">0</span>
-        </div>
     </div>
     <form action="/configjdbc/submit" method="post">
         <div>

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
     private static final Logger log =
             LoggerFactory.getLogger(MqttListener.class);
 
-    private final Map<String, SensorValues> messages =
+    private final Map<String, SensorValue> sensorValues =
             Collections.synchronizedMap(new HashMap<>());
 
     private final SensorJdbcRepository sensorJdbcRepository;
@@ -32,7 +33,7 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
             eventPublisher;
     private final JsonMapper jsonMapper;
 
-    private SensorValues message;
+    private SensorValue sensorValue;
 
     public MqttListener(SensorJdbcRepository _sensorJdbcRepository, ApplicationEventPublisher<MessageReceivedEvent> _eventPublisher, JsonMapper _jsonmapper) {
         this.sensorJdbcRepository = _sensorJdbcRepository;
@@ -58,38 +59,34 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
         log.info("topic: {}, zigbeeId: {} ({})", topic, zigbeeId, base10Id);
         log.info("data: {}", new String(data, StandardCharsets.UTF_8));
 
-        message = jsonMapper.readValue(data, SensorValues.class);
-        message.setTimestamp(LocalDateTime.now());
-        message.setZigbeeId(zigbeeId);
-        message.setTemperature(
-                (float) (TUnit.Fahrenheit.convert(message.temperature)));
+        sensorValue = jsonMapper.readValue(data, SensorValue.class);
+        sensorValue.setTimestamp(LocalDateTime.now());
+        sensorValue.setSensorId(zigbeeId);
+        sensorValue.setProtocol(Protocol.ZIGBEE.toString());
+        sensorValue.setTemperature(
+                (float) (TUnit.Fahrenheit.convert(sensorValue.temperature)));
 
-        log.info("message: {}", message);
+        log.info("sensorValue: {}", sensorValue);
 
-        messages.put(zigbeeId, message);
+        sensorValues.put(zigbeeId, sensorValue);
 
-        log.info("messages: {}", messages);
+        log.info("sensorValues: {}", sensorValues);
 
+        Sensor sensorDb = this.sensorJdbcRepository.findBySensorId(zigbeeId);
 
-        Sensor sensors = this.sensorJdbcRepository.findBySensorId(zigbeeId);
-
-        if (sensors == null) {
+        if (sensorDb == null) {
             Sensor sensor = new Sensor.Builder().sensorId(zigbeeId)
                     .protocol(Protocol.ZIGBEE.toString()).build();
 
             Sensor sensorSaved = this.sensorJdbcRepository.save(sensor);
 
-//        List<Sensor> sensors =
-//                this.sensorJdbcRepository.findBySensorId(zigbeeId);
-//
-//        if (sensors.isEmpty()) {
-//            Sensor sensor = this.sensorJdbcRepository.save(
-//                    new Sensor(zigbeeId, Protocol.ZIGBEE.toString()));
-
-            log.info("sensor: {}", sensorSaved);
+            log.info("sensorSaved: {}", sensorSaved);
+        }
+        else {
+            sensorValue.setName(sensorDb.getName());
         }
 
-        eventPublisher.publishEvent(new MessageReceivedEvent(message));
+        eventPublisher.publishEvent(new MessageReceivedEvent(sensorValue));
     }
 
     @SuppressWarnings("unused")
@@ -108,59 +105,45 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
         log.info("topic: {}, rtl433Id: {}", topic, rtl433Id);
         log.info("data: {}", new String(data, StandardCharsets.UTF_8));
 
-        message = jsonMapper.readValue(data, SensorValues.class);
-        message.setTimestamp(LocalDateTime.now());
-        message.setRtl433Id(rtl433Id);
-        message.setTemperature(message.temperatureF);
+        sensorValue = jsonMapper.readValue(data, SensorValue.class);
+        sensorValue.setTimestamp(LocalDateTime.now());
+        sensorValue.setProtocol(Protocol.MHZ433.toString());
+        sensorValue.setSensorId(rtl433Id);
+        sensorValue.setTemperature(sensorValue.temperatureF);
 
-        messages.put(rtl433Id, message);
+        sensorValues.put(rtl433Id, sensorValue);
 
-        log.info("messages: {}", messages);
+        log.info("channel: {}", sensorValue.getChannel());
+        log.info("sensorValues: {}", sensorValues);
 
-//        Sensor sensors = this.sensorJdbcRepository.findBySensorId(rtl433Id);
-
-        Sensor sensors = message.getChannel() != null ?
+        Sensor sensorDb = sensorValue.getChannel() != null ?
                 this.sensorJdbcRepository.findBySensorIdAndChannel(rtl433Id,
-                        message.channel) :
+                        sensorValue.channel) :
                 this.sensorJdbcRepository.findBySensorId(rtl433Id);
 
-        if (sensors == null) {
-            Sensor sensor = new Sensor.Builder().sensorId(rtl433Id)
+        if (sensorDb == null) {
+            final Sensor sensor = new Sensor.Builder().sensorId(rtl433Id)
                     .protocol(Protocol.MHZ433.toString())
-                    .channel(message.getChannel()).build();
+                    .channel(sensorValue.getChannel()).build();
 
-            Sensor sensorSaved = this.sensorJdbcRepository.save(sensor);
+            final Sensor sensorSaved = this.sensorJdbcRepository.save(sensor);
 
-            log.info("sensor: {}", sensorSaved);
+            log.info("sensorSaved: {}", sensorSaved);
+        }
+        else {
+            sensorValue.setName(sensorDb.getName());
         }
 
-//        List<Sensor> sensors =
-//                this.sensorJdbcRepository.findBySensorId(rtl433Id);
-//
-//        if (sensors.isEmpty()) {
-//            Sensor sensor = this.sensorJdbcRepository.save(
-//                    new Sensor(rtl433Id, Protocol.MHZ433.toString(),
-//                            message.getChannel()));
-//
-//            log.info("sensor: {}", sensor);
-//        }
-
-        eventPublisher.publishEvent(new MessageReceivedEvent(message));
+        eventPublisher.publishEvent(new MessageReceivedEvent(sensorValue));
     }
 
     @SuppressWarnings("unused")
-    @Nullable
-    public SensorValues getMessage() {
-        return message;
-    }
-
-    @SuppressWarnings("unused")
-    public Map<String, SensorValues> getMessages() {
-        return messages;
+    public Collection<SensorValue> getSensorvalues() {
+        return sensorValues.values();
     }
 
     @Override
-    public void handle(final MqttSubscriberException ex) {
-        log.error("subscriber exception: {}", ex);
+    public void handle(final MqttSubscriberException _ex) {
+        log.error("subscriber exception: {}", _ex);
     }
 }
