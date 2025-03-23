@@ -34,7 +34,7 @@ public class ConfigJdbcController {
     @View("list")
     @Get("/list")
     public HttpResponse<?> list() {
-        List<Sensor> sensors = sensorJdbcRepository.findAll();
+        final List<Sensor> sensors = sensorJdbcRepository.findAll();
 
         log.info("/list, sensors: {}", sensors);
 
@@ -48,7 +48,7 @@ public class ConfigJdbcController {
     HttpResponse<?> save(String sensorId, String channel) {
         log.info("sensorId: {}, channel: {}", sensorId, channel);
 
-        Sensor sensorDb = StringUtils.isNotBlank(channel) ?
+        final Sensor sensorDb = StringUtils.isNotBlank(channel) ?
                 this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
                         channel) :
                 this.sensorJdbcRepository.findBySensorId(sensorId);
@@ -72,7 +72,7 @@ public class ConfigJdbcController {
         log.info("sensorId: {}, name: {}, channel: {}, ignore: {}", sensorId,
                 name, channel, ignore);
 
-        Sensor sensorDb = StringUtils.isNotBlank(channel) ?
+        final Sensor sensorDb = StringUtils.isNotBlank(channel) ?
                 this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
                         channel) :
                 this.sensorJdbcRepository.findBySensorId(sensorId);

@@ -21,12 +21,12 @@ create table sensor
     ignore    boolean,
     created_at timestamp with time zone default now(),
     updated_at timestamp with time zone default now(),
-    channel    text,
-    protocol   text,
-    constraint fk_protocol foreign key (protocol)
-        references protocol (name)
-        on update restrict
-        on delete restrict
+    channel    text
+--     protocol   text,
+--     constraint fk_protocol foreign key (protocol)
+--         references protocol (name)
+--         on update restrict
+--         on delete restrict
 );
 
 insert into protocol (name)

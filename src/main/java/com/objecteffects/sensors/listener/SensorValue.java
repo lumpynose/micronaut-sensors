@@ -9,34 +9,32 @@ import java.util.StringJoiner;
 
 @Serdeable
 public class SensorValue {
-    //    String zigbeeId;
-    //    String rtl433Id;
-    String sensorId;
-    String timestamp;
-    String name;
+    private String sensorId;
+    private String timestamp;
+    private String name;
     @JsonProperty("air_quality")
-    String airQuality;
-    Float battery;
+    private String airQuality;
+    private Float battery;
     @JsonProperty("batterylow")
-    Boolean batteryLow;
+    private Boolean batteryLow;
     @JsonProperty("devicetemperature")
-    Float deviceTemperature;
-    Float humidity;
-    Float temperature;
+    private Float deviceTemperature;
+    private Float humidity;
+    private Float temperature; // Celsius
     @JsonProperty("temperature_F")
-    Float temperatureF;
-    Float voc;
+    private Float temperatureF; // Fahrenheit
+    private Float voc;
     @JsonProperty("linkquality")
-    Float linkQuality;
-    Boolean tamper;
+    private Float linkQuality;
+    private Boolean tamper;
     @JsonProperty("water_leak")
-    Boolean waterLeak;
+    private Boolean waterLeak;
     @JsonProperty("occupancy")
-    Boolean occupancy;
-    Float illuminance;
+    private Boolean occupancy;
+    private Float illuminance;
     @JsonProperty("channel")
-    String channel;
-    String protocol;
+    private String channel;
+//    private String protocol;
 
     public String getChannel() {
         return channel;
@@ -61,22 +59,6 @@ public class SensorValue {
     public void setName(final String name) {
         this.name = name;
     }
-
-//    public String getRtl433Id() {
-//        return rtl433Id;
-//    }
-
-//    public void setRtl433Id(final String rtl433Id) {
-//        this.rtl433Id = rtl433Id;
-//    }
-
-//    public String getZigbeeId() {
-//        return zigbeeId;
-//    }
-
-//    public void setZigbeeId(final String zigbeeId) {
-//        this.zigbeeId = zigbeeId;
-//    }
 
     public String getTimestamp() {
         return timestamp;
@@ -197,13 +179,13 @@ public class SensorValue {
         timestamp = _timestamp;
     }
 
-    public String getProtocol() {
-        return protocol;
-    }
+//    public String getProtocol() {
+//        return protocol;
+//    }
 
-    public void setProtocol(final String _protocol) {
-        protocol = _protocol;
-    }
+//    public void setProtocol(final String _protocol) {
+//        protocol = _protocol;
+//    }
 
     @Override
     public String toString() {

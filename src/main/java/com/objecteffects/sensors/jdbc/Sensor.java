@@ -11,6 +11,7 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 @Serdeable
@@ -21,9 +22,9 @@ public class Sensor {
     private UUID id;
 
     @DateCreated
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     @DateUpdated
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     /*
      * sensorId is how the sensor identifies itself.  Hex number for zigbee,
@@ -32,8 +33,8 @@ public class Sensor {
     @NonNull
     private String sensorId;
 
-    @NonNull
-    private String protocol;
+//    @NonNull
+//    private String protocol;
 
     @Nullable
     private String name;
@@ -47,20 +48,12 @@ public class Sensor {
         this.channel = channel;
     }
 
-    public Sensor(
-            @NonNull String sensorId,
-            @NonNull String protocol, @NonNull String channel) {
-        this.sensorId = sensorId;
-        this.protocol = protocol;
-        this.channel = channel;
-    }
-
     private Sensor(Builder builder) {
         this.sensorId = builder.sensorId;
         this.name = builder.name;
         this.channel = builder.channel;
         this.ignore = builder.ignore;
-        this.protocol = builder.protocol;
+//        this.protocol = builder.protocol;
     }
 
     public static class Builder {
@@ -68,7 +61,7 @@ public class Sensor {
         private String name;
         private String channel;
         private Boolean ignore;
-        private String protocol;
+//        private String protocol;
 
         public Sensor build() {
             return new Sensor(this);
@@ -98,11 +91,11 @@ public class Sensor {
             return this;
         }
 
-        public Builder protocol(@NonNull String protocol) {
-            this.protocol = protocol;
-
-            return this;
-        }
+//        public Builder protocol(@NonNull String protocol) {
+//            this.protocol = protocol;
+//
+//            return this;
+//        }
     }
 
     public Boolean getIgnore() {
@@ -153,10 +146,10 @@ public class Sensor {
         this.sensorId = sensorId;
     }
 
-    @NonNull
-    public String getProtocol() {
-        return protocol;
-    }
+//    @NonNull
+//    public String getProtocol() {
+//        return protocol;
+//    }
 
     public @Nullable String getChannel() {
         return channel;
@@ -166,17 +159,17 @@ public class Sensor {
         channel = _channel;
     }
 
-    public void setProtocol(@NonNull final String _protocol) {
-        protocol = _protocol;
-    }
+//    public void setProtocol(@NonNull final String _protocol) {
+//        protocol = _protocol;
+//    }
 
     @Override
     public String toString() {
-        final String sb =
-                "Sensor{" + "id=" + id + ", sensorId='" + sensorId + '\'' +
-                        ", name='" + name + '\'' + ", ignore=" + ignore +
-                        ", protocol='" + protocol + '\'' + ", createdAt=" +
-                        createdAt + ", updatedAt=" + updatedAt + '}';
-        return sb;
+        return new StringJoiner(", ", Sensor.class.getSimpleName() + "[",
+                "]").add("id=" + id).add("createdAt=" + createdAt)
+                .add("updatedAt=" + updatedAt)
+                .add("sensorId='" + sensorId + "'").add("name='" + name + "'")
+                .add("channel='" + channel + "'").add("ignore=" + ignore)
+                .toString();
     }
 }

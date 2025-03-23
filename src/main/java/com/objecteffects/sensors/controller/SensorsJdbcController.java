@@ -29,15 +29,15 @@ class SensorsJdbcController {
     @View("sensors")
     @Get("/")
     public HttpResponse<?> index() {
-        log.info("sensor: active names: {}",
-                applicationContext.getEnvironment().getActiveNames());
+//        log.info("sensor: active names: {}",
+//                applicationContext.getEnvironment().getActiveNames());
 
-        final Collection<SensorValue> sensorvalues =
+        final Collection<SensorValue> sensorValues =
                 mqttListener.getSensorvalues();
 
-        log.info("messages: {}", sensorvalues);
+        log.info("sensorValues: {}", sensorValues);
 
         return HttpResponse.ok(
-                CollectionUtils.mapOf("sensorvalues", sensorvalues));
+                CollectionUtils.mapOf("sensorvalues", sensorValues));
     }
 }
