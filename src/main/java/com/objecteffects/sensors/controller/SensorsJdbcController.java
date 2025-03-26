@@ -18,11 +18,11 @@ class SensorsJdbcController {
     private static final Logger log =
             LoggerFactory.getLogger(SensorsJdbcController.class);
 
-    private final ApplicationContext applicationContext;
+    //    private final ApplicationContext applicationContext;
     private final MqttListener mqttListener;
 
     public SensorsJdbcController(ApplicationContext _applicationContext, MqttListener _mqttListener) {
-        this.applicationContext = _applicationContext;
+//        this.applicationContext = _applicationContext;
         this.mqttListener = _mqttListener;
     }
 

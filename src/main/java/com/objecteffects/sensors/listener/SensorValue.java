@@ -1,14 +1,16 @@
 package com.objecteffects.sensors.listener;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringJoiner;
 
+@Introspected
 @Serdeable
-public class SensorValue {
+public class SensorValue implements Comparable<SensorValue> {
     private String sensorId;
     private String timestamp;
     private String name;
@@ -201,5 +203,44 @@ public class SensorValue {
                 .add("waterLeak=" + waterLeak).add("occupancy=" + occupancy)
                 .add("illuminance=" + illuminance)
                 .add("channel='" + channel + "'").toString();
+    }
+
+    public int compare(final SensorValue o1, final SensorValue o2) {
+        if (o1.getName() != null) {
+            if (o2.getName() != null) {
+                return o1.getName().compareTo(o2.getName());
+            }
+            else {
+                return o1.getName().compareTo(o2.getSensorId());
+            }
+        }
+        else {
+            if (o2.getName() != null) {
+                return o1.getSensorId().compareTo(o2.getName());
+            }
+            else {
+                return o1.getSensorId().compareTo(o2.getSensorId());
+            }
+        }
+    }
+
+    @Override
+    public int compareTo(final SensorValue o2) {
+        if (this.getName() != null) {
+            if (o2.getName() != null) {
+                return this.getName().compareTo(o2.getName());
+            }
+            else {
+                return this.getName().compareTo(o2.getSensorId());
+            }
+        }
+        else {
+            if (o2.getName() != null) {
+                return this.getSensorId().compareTo(o2.getName());
+            }
+            else {
+                return this.getSensorId().compareTo(o2.getSensorId());
+            }
+        }
     }
 }

@@ -63,6 +63,7 @@ public class ConfigJdbcController {
         return HttpResponse.ok(CollectionUtils.mapOf("sensor", sensorDb));
     }
 
+    @View("list")
     @Post("/submit")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public HttpResponse<?> submit(String sensorId,
@@ -86,6 +87,9 @@ public class ConfigJdbcController {
 
         log.info("sensorSaved: {}", sensorSaved);
 
-        return HttpResponse.ok(sensorSaved);
+//        return HttpResponse.ok(sensorSaved);
+
+        return HttpResponse.ok(CollectionUtils.mapOf("sensors",
+                sensorJdbcRepository.findAll()));
     }
 }
