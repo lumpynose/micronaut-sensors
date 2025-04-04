@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content, refresh)"
-      xmlns:th="http://www.thymeleaf.org">
+<html data-th-fragment="layout (title, content, refresh)">
 <head>
     <meta charset="UTF-8">
     <link href="/css/stylesheet.css" rel="stylesheet">
@@ -14,7 +13,7 @@
     <p>Layout content</p>
 </div>
 <footer>
-    <div th:replace="~{footer :: footer}">&copy; 2016 Object Effects</div>
+    <div data-th-replace="~{footer :: footer}">&copy; 2016 Object Effects</div>
 </footer>
 </body>
 </html>
