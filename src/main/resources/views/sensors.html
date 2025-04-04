@@ -8,7 +8,8 @@
 <body>
 <section>
     <h2>Sensors</h2>
-    <div data-th-class="main-box" data-th-each="sensorvalue : ${sensorvalues}">
+    <div data-th-class="main-box"
+         data-th-each="sensorvalue : ${sensorvalues}">
         <div data-th-class="sensor-box" data-th-if="${sensorvalue.temperature}">
             <div data-th-class="sensorid" data-th-if="${sensorvalue.name}">
                 <span data-th-text="${sensorvalue.name}">Sensor Id</span><span

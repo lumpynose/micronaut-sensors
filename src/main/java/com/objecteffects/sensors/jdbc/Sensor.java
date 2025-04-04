@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Serdeable
 @MappedEntity
-public class Sensor {
+public class Sensor implements Comparable<Sensor> {
     @Id
     @GeneratedValue(GeneratedValue.Type.AUTO)
     private UUID id;
@@ -54,6 +54,26 @@ public class Sensor {
         this.channel = builder.channel;
         this.ignore = builder.ignore;
 //        this.protocol = builder.protocol;
+    }
+
+    @Override
+    public int compareTo(final Sensor o2) {
+        if (this.getName() != null) {
+            if (o2.getName() != null) {
+                return this.getName().compareTo(o2.getName());
+            }
+            else {
+                return this.getName().compareTo(o2.getSensorId());
+            }
+        }
+        else {
+            if (o2.getName() != null) {
+                return this.getSensorId().compareTo(o2.getName());
+            }
+            else {
+                return this.getSensorId().compareTo(o2.getSensorId());
+            }
+        }
     }
 
     public static class Builder {

@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 @ExecuteOn(TaskExecutors.BLOCKING)
@@ -35,11 +36,11 @@ public class ConfigJdbcController {
     @Get("/list")
     public HttpResponse<?> list() {
         final List<Sensor> sensors = sensorJdbcRepository.findAll();
+        Collections.sort(sensors);
 
         log.info("/list, sensors: {}", sensors);
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensors",
-                sensorJdbcRepository.findAll()));
+        return HttpResponse.ok(CollectionUtils.mapOf("sensors", sensors));
     }
 
     @View("edit")

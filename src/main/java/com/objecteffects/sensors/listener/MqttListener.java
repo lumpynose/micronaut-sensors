@@ -16,9 +16,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @MqttSubscriber
@@ -181,8 +182,11 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
     }
 
     @SuppressWarnings("unused")
-    public Collection<SensorValue> getSensorvalues() {
-        return sensorValues.values();
+    public List<SensorValue> getSensorvalues() {
+        List<SensorValue> sorted = new ArrayList<>(sensorValues.values());
+        Collections.sort(sorted);
+
+        return sorted;
     }
 
     @Override
