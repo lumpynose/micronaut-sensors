@@ -1,5 +1,7 @@
 package com.objecteffects.sensors.controller;
 
+import com.objecteffects.sensors.jdbc.Location;
+import com.objecteffects.sensors.jdbc.LocationJdbcRepository;
 import com.objecteffects.sensors.jdbc.Sensor;
 import com.objecteffects.sensors.jdbc.SensorJdbcRepository;
 import io.micronaut.core.annotation.Nullable;
@@ -17,8 +19,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ExecuteOn(TaskExecutors.BLOCKING)
 @Controller("/configjdbc")
@@ -27,9 +33,11 @@ public class ConfigJdbcController {
             LoggerFactory.getLogger(ConfigJdbcController.class);
 
     private final SensorJdbcRepository sensorJdbcRepository;
+    private final LocationJdbcRepository locationJdbcRepository;
 
-    public ConfigJdbcController(SensorJdbcRepository _sensorJdbcRepository) {
+    public ConfigJdbcController(SensorJdbcRepository _sensorJdbcRepository, LocationJdbcRepository _locationJdbcRepository) {
         this.sensorJdbcRepository = _sensorJdbcRepository;
+        this.locationJdbcRepository = _locationJdbcRepository;
     }
 
     @View("list")
@@ -56,23 +64,29 @@ public class ConfigJdbcController {
 
         log.info("sensorDb: {}", sensorDb);
 
-//        Sensor sensor = new Sensor(sensorId, channel);
+        final List<Location> locations = this.locationJdbcRepository.findAll();
 
-        // new Sensor.Builder().sensorId(sensorId).channel(channel)
-        //    .build();
+        log.info("locations: {}", locations);
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensor", sensorDb));
+        Map<String, Object> model = new HashMap<>();
+        model.put("sensor", sensorDb);
+        model.put("locations", this.locationJdbcRepository.findAll());
+
+        return HttpResponse.ok(model);
+
     }
 
-    @View("list")
     @Post("/submit")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public HttpResponse<?> submit(String sensorId,
                                   @Nullable String name,
                                   @Nullable String channel,
-                                  @Nullable Boolean ignore) {
-        log.info("sensorId: {}, name: {}, channel: {}, ignore: {}", sensorId,
-                name, channel, ignore);
+                                  @Nullable String location,
+                                  @Nullable Boolean ignore)
+            throws URISyntaxException {
+        log.info(
+                "sensorId: {}, name: {}, channel: {}, location: {}, ignore: {}",
+                sensorId, name, channel, location, ignore);
 
         final Sensor sensorDb = StringUtils.isNotBlank(channel) ?
                 this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
@@ -81,16 +95,27 @@ public class ConfigJdbcController {
 
         log.info("sensorDb: {}", sensorDb);
 
-        sensorDb.setName(name);
-        sensorDb.setIgnore(ignore);
+        if (StringUtils.isNotBlank(name)) {
+            sensorDb.setName(name);
+        }
+
+        //        if (StringUtils.isNotBlank(location)) {
+        //            sensorDb.setLocation(location);
+        //        }
+
+        if (ignore != null) {
+            sensorDb.setIgnore(ignore);
+        }
 
         final Sensor sensorSaved = this.sensorJdbcRepository.update(sensorDb);
 
         log.info("sensorSaved: {}", sensorSaved);
 
-//        return HttpResponse.ok(sensorSaved);
+        //        return HttpResponse.ok(CollectionUtils.mapOf("sensors",
+        //                sensorJdbcRepository.findAll()));
 
-        return HttpResponse.ok(CollectionUtils.mapOf("sensors",
-                sensorJdbcRepository.findAll()));
+        URI uri = new URI("/configjdbc/list");
+
+        return HttpResponse.redirect(uri);
     }
 }

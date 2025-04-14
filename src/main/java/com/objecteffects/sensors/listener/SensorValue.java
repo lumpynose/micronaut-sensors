@@ -13,6 +13,8 @@ import java.util.StringJoiner;
 public class SensorValue implements Comparable<SensorValue> {
     private String sensorId;
     private String timestamp;
+    @JsonProperty("time")
+    private String time;
     private String name;
     @JsonProperty("air_quality")
     private String airQuality;
@@ -21,10 +23,13 @@ public class SensorValue implements Comparable<SensorValue> {
     private Boolean batteryLow;
     @JsonProperty("devicetemperature")
     private Float deviceTemperature;
+    @JsonProperty("humidity")
     private Float humidity;
+    @JsonProperty("temperature")
     private Float temperature; // Celsius
     @JsonProperty("temperature_F")
     private Float temperatureF; // Fahrenheit
+    @JsonProperty("voc")
     private Float voc;
     @JsonProperty("linkquality")
     private Float linkQuality;
@@ -36,7 +41,15 @@ public class SensorValue implements Comparable<SensorValue> {
     private Float illuminance;
     @JsonProperty("channel")
     private String channel;
-//    private String protocol;
+    //    private String protocol;
+
+    private final DateTimeFormatter timestampFormatter =
+            DateTimeFormatter.ofPattern("dd MMM HH:mm");
+
+    private final DateTimeFormatter dateTimeFormatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    // 2025-04-09 14:55:19.231607
+    // 2025-04-09 14:58:49.420648
 
     public String getChannel() {
         return channel;
@@ -67,10 +80,7 @@ public class SensorValue implements Comparable<SensorValue> {
     }
 
     public void setTimestamp(final LocalDateTime timestamp) {
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("dd MMM HH:mm");
-
-        this.timestamp = timestamp.format(formatter);
+        this.timestamp = timestamp.format(timestampFormatter);
     }
 
     public String getAirQuality() {
@@ -117,8 +127,8 @@ public class SensorValue implements Comparable<SensorValue> {
         return temperature;
     }
 
-    public void setTemperature(final Float temperature) {
-        this.temperature = temperature;
+    public void setTemperature(final Float _temperature) {
+        this.temperature = _temperature;
     }
 
     public Float getVoc() {
@@ -181,28 +191,34 @@ public class SensorValue implements Comparable<SensorValue> {
         timestamp = _timestamp;
     }
 
-//    public String getProtocol() {
-//        return protocol;
-//    }
+    public String getTime() {
+        return time;
+    }
 
-//    public void setProtocol(final String _protocol) {
-//        protocol = _protocol;
-//    }
+    public void setTime(final String _time) {
+        time = _time;
+    }
 
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", SensorValue.class.getSimpleName() + "[",
-                "]").add("sensorId='" + sensorId + "'")
-                .add("timestamp='" + timestamp + "'").add("name='" + name + "'")
-                .add("airQuality='" + airQuality + "'")
-                .add("battery=" + battery).add("batteryLow=" + batteryLow)
-                .add("deviceTemperature=" + deviceTemperature)
-                .add("humidity=" + humidity).add("temperature=" + temperature)
-                .add("temperatureF=" + temperatureF).add("voc=" + voc)
-                .add("linkQuality=" + linkQuality).add("tamper=" + tamper)
-                .add("waterLeak=" + waterLeak).add("occupancy=" + occupancy)
-                .add("illuminance=" + illuminance)
-                .add("channel='" + channel + "'").toString();
+    public String getDateTime() {
+        if (time == null) {
+            return null;
+        }
+
+        String timeTrimmed;
+
+        int dotIndex = time.indexOf('.');
+
+        if (dotIndex != -1) {
+            timeTrimmed = time.substring(0, dotIndex);
+        }
+        else {
+            timeTrimmed = time;
+        }
+
+        LocalDateTime dateTime =
+                LocalDateTime.parse(timeTrimmed, dateTimeFormatter);
+
+        return dateTime.format(timestampFormatter);
     }
 
     public int compare(final SensorValue o1, final SensorValue o2) {
@@ -210,18 +226,15 @@ public class SensorValue implements Comparable<SensorValue> {
             if (o2.getName() != null) {
                 return o1.getName().compareTo(o2.getName());
             }
-            else {
-                return o1.getName().compareTo(o2.getSensorId());
-            }
+
+            return o1.getName().compareTo(o2.getSensorId());
         }
-        else {
-            if (o2.getName() != null) {
-                return o1.getSensorId().compareTo(o2.getName());
-            }
-            else {
-                return o1.getSensorId().compareTo(o2.getSensorId());
-            }
+
+        if (o2.getName() != null) {
+            return o1.getSensorId().compareTo(o2.getName());
         }
+
+        return o1.getSensorId().compareTo(o2.getSensorId());
     }
 
     @Override
@@ -230,17 +243,32 @@ public class SensorValue implements Comparable<SensorValue> {
             if (o2.getName() != null) {
                 return this.getName().compareTo(o2.getName());
             }
-            else {
-                return this.getName().compareTo(o2.getSensorId());
-            }
+
+            return this.getName().compareTo(o2.getSensorId());
         }
-        else {
-            if (o2.getName() != null) {
-                return this.getSensorId().compareTo(o2.getName());
-            }
-            else {
-                return this.getSensorId().compareTo(o2.getSensorId());
-            }
+
+        if (o2.getName() != null) {
+            return this.getSensorId().compareTo(o2.getName());
         }
+
+        return this.getSensorId().compareTo(o2.getSensorId());
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", SensorValue.class.getSimpleName() + "[",
+                "]").add("sensorId='" + sensorId + "'")
+                .add("timestamp='" + timestamp + "'").add("time='" + time + "'")
+                .add("name='" + name + "'")
+                .add("airQuality='" + airQuality + "'")
+                .add("battery=" + battery).add("batteryLow=" + batteryLow)
+                .add("deviceTemperature=" + deviceTemperature)
+                .add("humidity=" + humidity).add("temperature=" + temperature)
+                .add("temperatureF=" + temperatureF).add("voc=" + voc)
+                .add("linkQuality=" + linkQuality).add("tamper=" + tamper)
+                .add("waterLeak=" + waterLeak).add("occupancy=" + occupancy)
+                .add("illuminance=" + illuminance)
+                .add("channel='" + channel + "'")
+                .add("dateTime=" + this.getDateTime()).toString();
     }
 }

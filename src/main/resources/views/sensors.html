@@ -57,8 +57,12 @@
                 <div data-th-class="value"
                      data-th-text="${sensorvalue.occupancy}"></div>
             </div>
+            <div data-th-class="timestamp" data-th-if="${sensorvalue.dateTime}">
+                <span data-th-text="${sensorvalue.dateTime}">Time</span>
+            </div>
             <div data-th-class="timestamp"
-                 data-th-text="${sensorvalue.timestamp}">Timestamp
+                 data-th-unless="${sensorvalue.dateTime}">
+                <span data-th-text="${sensorvalue.timestamp}">Timestamp</span>
             </div>
         </div>
     </div>

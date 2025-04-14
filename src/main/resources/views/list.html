@@ -23,18 +23,16 @@
                     </span><span data-th-if="${sensor.channel}"
                                  data-th-text="'[' + ${sensor.channel} + ']'">0</span></a>
             </div>
-            <!--            <div data-th-class="protocol" data-th-if="${sensor.protocol}">-->
-            <!--                <div>Protocol</div>-->
-            <!--                <div data-th-class="value"-->
-            <!--                     data-th-text="${sensor.protocol}">-->
-            <!--                    Protocol-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div data-th-class="name" data-th-if="${sensor.name}">
                 <div>Name</div>
                 <div data-th-class="value" data-th-text="${sensor.name}">
-                    Rtl433
                     Name
+                </div>
+            </div>
+            <div data-th-class="location" data-th-if="${sensor.location}">
+                <div>Location</div>
+                <div data-th-class="value" data-th-text="${sensor.location}">
+                    Location
                 </div>
             </div>
             <div data-th-class="ignore" data-th-if="${sensor.ignore}">

@@ -32,9 +32,8 @@ public class Sensor implements Comparable<Sensor> {
      */
     @NonNull
     private String sensorId;
-
-//    @NonNull
-//    private String protocol;
+    @Nullable
+    private UUID location;
 
     @Nullable
     private String name;
@@ -53,27 +52,8 @@ public class Sensor implements Comparable<Sensor> {
         this.name = builder.name;
         this.channel = builder.channel;
         this.ignore = builder.ignore;
-//        this.protocol = builder.protocol;
-    }
-
-    @Override
-    public int compareTo(final Sensor o2) {
-        if (this.getName() != null) {
-            if (o2.getName() != null) {
-                return this.getName().compareTo(o2.getName());
-            }
-            else {
-                return this.getName().compareTo(o2.getSensorId());
-            }
-        }
-        else {
-            if (o2.getName() != null) {
-                return this.getSensorId().compareTo(o2.getName());
-            }
-            else {
-                return this.getSensorId().compareTo(o2.getSensorId());
-            }
-        }
+        this.location = builder.location;
+        //        this.protocol = builder.protocol;
     }
 
     public static class Builder {
@@ -81,7 +61,9 @@ public class Sensor implements Comparable<Sensor> {
         private String name;
         private String channel;
         private Boolean ignore;
-//        private String protocol;
+        private UUID location;
+
+        //        private String protocol;
 
         public Sensor build() {
             return new Sensor(this);
@@ -111,11 +93,17 @@ public class Sensor implements Comparable<Sensor> {
             return this;
         }
 
-//        public Builder protocol(@NonNull String protocol) {
-//            this.protocol = protocol;
-//
-//            return this;
-//        }
+        public Builder location(@NonNull UUID location) {
+            this.location = location;
+
+            return this;
+        }
+
+        //        public Builder protocol(@NonNull String protocol) {
+        //            this.protocol = protocol;
+        //
+        //            return this;
+        //        }
     }
 
     public Boolean getIgnore() {
@@ -166,10 +154,13 @@ public class Sensor implements Comparable<Sensor> {
         this.sensorId = sensorId;
     }
 
-//    @NonNull
-//    public String getProtocol() {
-//        return protocol;
-//    }
+    public @Nullable UUID getLocation() {
+        return location;
+    }
+
+    public void setLocation(@Nullable final UUID _location) {
+        location = _location;
+    }
 
     public @Nullable String getChannel() {
         return channel;
@@ -179,9 +170,31 @@ public class Sensor implements Comparable<Sensor> {
         channel = _channel;
     }
 
-//    public void setProtocol(@NonNull final String _protocol) {
-//        protocol = _protocol;
-//    }
+    //    @Nullable
+    //    public String getProtocol() {
+    //        return protocol;
+    //    }
+
+    //    public void setProtocol(@NonNull final String _protocol) {
+    //        protocol = _protocol;
+    //    }
+
+    @Override
+    public int compareTo(final Sensor o2) {
+        if (this.getName() != null) {
+            if (o2.getName() != null) {
+                return this.getName().compareTo(o2.getName());
+            }
+
+            return this.getName().compareTo(o2.getSensorId());
+        }
+
+        if (o2.getName() != null) {
+            return this.getSensorId().compareTo(o2.getName());
+        }
+
+        return this.getSensorId().compareTo(o2.getSensorId());
+    }
 
     @Override
     public String toString() {
