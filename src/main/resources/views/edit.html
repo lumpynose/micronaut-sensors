@@ -11,34 +11,22 @@
 <body>
 <section data-th-class="sensor-edit">
     <h2>Sensor Edit</h2>
-    <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
-            <span data-th-text="${sensor.sensorId}">Sensor Id
-            </span><span data-th-if="${sensor.channel} != ''"
-                         data-th-text="'[' + ${sensor.channel} + ']'">0</span>
-    </div>
     <form action="/configjdbc/submit" method="post">
         <div data-th-class="grid-container">
-            <!--            <p>-->
+            <div data-th-class="grid-sensorid" data-th-if="${sensor.sensorId}">
+                <span data-th-text="${sensor.sensorId}">Sensor Id</span>
+                <span data-th-if="${sensor.channel} != ''"
+                      data-th-text="'[' + ${sensor.channel} + ']'">0</span>
+            </div>
             <label data-th-class="grid-label" for="name">name:</label>
             <input data-th-class="grid-input" id="name" name="name" type="text"
                    value="${sensor.name}"
                    data-th-value="${sensor.name}"/>
-            <!--            </p>-->
-            <!--            <p>-->
-            <!--            <label for="location">location:</label>-->
-            <!--            <input id="location" name="location" type="text"-->
-            <!--                   value="${sensor.location}"-->
-            <!--                   data-th-value="${sensor.location}"/>-->
-            <!--            </p>-->
-            <!--            <p>-->
             <label data-th-class="grid-label" for="ignore">ignore:</label>
             <input data-th-class="grid-input" id="ignore" name="ignore"
                    type="checkbox"
                    value="${sensor.ignore}"
                    data-th-value="${sensor.ignore}"/>
-
-            <!--            </p>-->
-            <!--            <p>-->
             <label data-th-class="grid-label" for="location">location: </label>
             <select data-th-class="grid-select" data-th-field="*{location}"
                     id="location">
@@ -48,22 +36,14 @@
                     location
                 </option>
             </select>
-            <!--            </p>-->
-            <!--            <ul>-->
-            <!--                <li data-th-each="location : ${locations}">-->
-            <!--                    <input type="checkbox" data-th-field="*{location.name}"-->
-            <!--                           data-th-value="${location.name}"/>-->
-            <!--                    <label data-th-for="${#ids.prev('location.name')}"-->
-            <!--                           data-th-text="#{${'location.name'}}">Location</label>-->
-            <!--                </li>-->
-            <!--            </ul>-->
-            <input id="sensorId" name="sensorId" type="text" hidden="true"
+            <input data-th-class="grid-submit" type="submit" value="Submit"/>
+            <input data-th-class="grid-hidden" id="sensorId" name="sensorId"
+                   type="text" hidden="true"
                    value="sensorId"
                    data-th-value="${sensor.sensorId} "/>
             <input id="channel" name="channel" type="text" hidden="true"
                    value="channel"
                    data-th-value="${sensor.channel}"/>
-            <input type="submit" value="Submit"/>
         </div>
     </form>
 </section>

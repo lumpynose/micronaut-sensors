@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
-public interface LocationJdbcRepository extends CrudRepository<Location, UUID> {
+public interface LocationRepository extends CrudRepository<Location, UUID> {
     @NonNull
     List<Location> findAll();
 }

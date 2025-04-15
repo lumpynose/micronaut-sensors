@@ -1,9 +1,9 @@
 package com.objecteffects.sensors.controller;
 
 import com.objecteffects.sensors.jdbc.Location;
-import com.objecteffects.sensors.jdbc.LocationJdbcRepository;
+import com.objecteffects.sensors.jdbc.LocationRepository;
 import com.objecteffects.sensors.jdbc.Sensor;
-import com.objecteffects.sensors.jdbc.SensorJdbcRepository;
+import com.objecteffects.sensors.jdbc.SensorRepository;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
@@ -27,23 +27,23 @@ import java.util.List;
 import java.util.Map;
 
 @ExecuteOn(TaskExecutors.BLOCKING)
-@Controller("/configjdbc")
-public class ConfigJdbcController {
+@Controller("/config")
+public class ConfigController {
     private static final Logger log =
-            LoggerFactory.getLogger(ConfigJdbcController.class);
+            LoggerFactory.getLogger(ConfigController.class);
 
-    private final SensorJdbcRepository sensorJdbcRepository;
-    private final LocationJdbcRepository locationJdbcRepository;
+    private final SensorRepository sensorRepository;
+    private final LocationRepository locationRepository;
 
-    public ConfigJdbcController(SensorJdbcRepository _sensorJdbcRepository, LocationJdbcRepository _locationJdbcRepository) {
-        this.sensorJdbcRepository = _sensorJdbcRepository;
-        this.locationJdbcRepository = _locationJdbcRepository;
+    public ConfigController(SensorRepository _sensorRepository, LocationRepository _locationRepository) {
+        this.sensorRepository = _sensorRepository;
+        this.locationRepository = _locationRepository;
     }
 
     @View("list")
     @Get("/list")
     public HttpResponse<?> list() {
-        final List<Sensor> sensors = sensorJdbcRepository.findAll();
+        final List<Sensor> sensors = sensorRepository.findAll();
         Collections.sort(sensors);
 
         log.info("/list, sensors: {}", sensors);
@@ -58,19 +58,19 @@ public class ConfigJdbcController {
         log.info("sensorId: {}, channel: {}", sensorId, channel);
 
         final Sensor sensorDb = StringUtils.isNotBlank(channel) ?
-                this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
+                this.sensorRepository.findBySensorIdAndChannel(sensorId,
                         channel) :
-                this.sensorJdbcRepository.findBySensorId(sensorId);
+                this.sensorRepository.findBySensorId(sensorId);
 
         log.info("sensorDb: {}", sensorDb);
 
-        final List<Location> locations = this.locationJdbcRepository.findAll();
+        final List<Location> locations = this.locationRepository.findAll();
 
         log.info("locations: {}", locations);
 
         Map<String, Object> model = new HashMap<>();
         model.put("sensor", sensorDb);
-        model.put("locations", this.locationJdbcRepository.findAll());
+        model.put("locations", this.locationRepository.findAll());
 
         return HttpResponse.ok(model);
 
@@ -89,9 +89,9 @@ public class ConfigJdbcController {
                 sensorId, name, channel, location, ignore);
 
         final Sensor sensorDb = StringUtils.isNotBlank(channel) ?
-                this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
+                this.sensorRepository.findBySensorIdAndChannel(sensorId,
                         channel) :
-                this.sensorJdbcRepository.findBySensorId(sensorId);
+                this.sensorRepository.findBySensorId(sensorId);
 
         log.info("sensorDb: {}", sensorDb);
 
@@ -107,14 +107,14 @@ public class ConfigJdbcController {
             sensorDb.setIgnore(ignore);
         }
 
-        final Sensor sensorSaved = this.sensorJdbcRepository.update(sensorDb);
+        final Sensor sensorSaved = this.sensorRepository.update(sensorDb);
 
         log.info("sensorSaved: {}", sensorSaved);
 
         //        return HttpResponse.ok(CollectionUtils.mapOf("sensors",
-        //                sensorJdbcRepository.findAll()));
+        //                sensorRepository.findAll()));
 
-        URI uri = new URI("/configjdbc/list");
+        URI uri = new URI("/config/list");
 
         return HttpResponse.redirect(uri);
     }

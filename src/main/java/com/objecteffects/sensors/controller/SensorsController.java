@@ -12,24 +12,24 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-@Controller("/sensorsjdbc")
-class SensorsJdbcController {
+@Controller("/sensors")
+class SensorsController {
     private static final Logger log =
-            LoggerFactory.getLogger(SensorsJdbcController.class);
+            LoggerFactory.getLogger(SensorsController.class);
 
     private final MqttListener mqttListener;
 
-    public SensorsJdbcController(MqttListener _mqttListener) {
+    public SensorsController(MqttListener _mqttListener) {
         this.mqttListener = _mqttListener;
     }
 
     @View("sensors")
-    @Get("/")
+    @Get
     public HttpResponse<?> index() {
         final List<SensorValue> sensorValues = mqttListener.getSensorvalues();
 
-//        final SensorValues sensorValues =
-//                new SensorValues(mqttListener.getSensorvalues());
+        //        final SensorValues sensorValues =
+        //                new SensorValues(mqttListener.getSensorvalues());
 
         log.info("sensorValues: {}", sensorValues);
 

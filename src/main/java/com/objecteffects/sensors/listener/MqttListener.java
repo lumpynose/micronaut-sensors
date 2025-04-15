@@ -1,7 +1,7 @@
 package com.objecteffects.sensors.listener;
 
 import com.objecteffects.sensors.jdbc.Sensor;
-import com.objecteffects.sensors.jdbc.SensorJdbcRepository;
+import com.objecteffects.sensors.jdbc.SensorRepository;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.json.JsonMapper;
@@ -30,15 +30,15 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
     private final Map<String, SensorValue> sensorValues =
             Collections.synchronizedMap(new HashMap<>());
 
-    private final SensorJdbcRepository sensorJdbcRepository;
+    private final SensorRepository sensorRepository;
     private final ApplicationEventPublisher<MessageReceivedEvent>
             eventPublisher;
     private final JsonMapper jsonMapper;
 
     //    private SensorValue sensorValue;
 
-    public MqttListener(SensorJdbcRepository _sensorJdbcRepository, ApplicationEventPublisher<MessageReceivedEvent> _eventPublisher, JsonMapper _jsonmapper) {
-        this.sensorJdbcRepository = _sensorJdbcRepository;
+    public MqttListener(SensorRepository _sensorRepository, ApplicationEventPublisher<MessageReceivedEvent> _eventPublisher, JsonMapper _jsonmapper) {
+        this.sensorRepository = _sensorRepository;
         this.eventPublisher = _eventPublisher;
         this.jsonMapper = _jsonmapper;
     }
@@ -112,16 +112,15 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
         log.info("sensorValues: {}", sensorValues);
 
         //        final Sensor sensorDb =
-        //                this.sensorJdbcRepository.findBySensorId(sensorIdChan);
+        //                this.sensorRepository.findBySensorId(sensorIdChan);
         final Sensor sensorDb;
 
         if (StringUtils.isNotBlank(sensorValue.getChannel())) {
-            sensorDb =
-                    this.sensorJdbcRepository.findBySensorIdAndChannel(sensorId,
-                            sensorValue.getChannel());
+            sensorDb = this.sensorRepository.findBySensorIdAndChannel(sensorId,
+                    sensorValue.getChannel());
         }
         else {
-            sensorDb = this.sensorJdbcRepository.findBySensorId(sensorId);
+            sensorDb = this.sensorRepository.findBySensorId(sensorId);
         }
 
         if (sensorDb == null) {
@@ -129,7 +128,7 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
             final Sensor sensor = new Sensor.Builder().sensorId(sensorId)
                     .channel(sensorValue.getChannel()).build();
 
-            final Sensor sensorSaved = this.sensorJdbcRepository.save(sensor);
+            final Sensor sensorSaved = this.sensorRepository.save(sensor);
 
             // no name yet thus no need to do a setName()
 

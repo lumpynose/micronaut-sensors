@@ -4,7 +4,7 @@ footer {
 }
 
 h2 {
-    text-align: center;
+    text-align: left;
     font-size: x-large;
 }
 
@@ -39,33 +39,55 @@ h2 {
     font-size: smaller;
 }
 
-.sensorid {
-    background-color: rgba(190, 190, 0, 0.2);
+.grid-container {
+    display: grid;
+    justify-content: start;
+    /*grid-template-columns: [label] 0.25fr [value] 0.25fr;*/
+    grid-template-columns: min-content min-content;
+    grid-gap: 0.5em;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 1.0);
+    width: 50%;
+}
+
+.grid-sensorid {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    justify-self: center;
+    margin-bottom: 0.5em;
     font-weight: bolder;
 }
 
-.sensor-edit .sensorid {
-    margin-bottom: 1em;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 18em 0.25fr;
-    grid-gap: 0.5em;
-    margin-bottom: 1em;
-    text-align: left;
-}
-
 .grid-label {
-    background-color: rgba(190, 0, 190, 0.2);
-    grid-column: 1 / 2;
+    /*grid-column: 1 / 2;*/
+    grid-column-start: 1;
+    grid-column-end: auto;
+    justify-self: end;
+    /*background-color: rgba(255, 0, 255, 0.2);*/
+    /*border: 1px solid rgba(0, 255, 255, 1.0);*/
 }
 
 .grid-input,
 .grid-select {
-    background-color: rgba(0, 190, 190, 0.2);
-    grid-column: 2 / 3;
-    text-align: left;
+    /*grid-column: 2 / 3;*/
+    grid-column-start: 2;
+    grid-column-end: auto;
+    justify-self: start;
+    /*background-color: rgba(0, 255, 255, 0.2);*/
+    /*border: 1px solid rgba(255, 0, 255, 1.0);*/
+}
+
+.grid-submit {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    justify-self: end;
+}
+
+.grid-hidden {
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 1.0);
 }
 
 .value {

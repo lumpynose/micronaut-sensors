@@ -16,7 +16,6 @@ class HtmxController {
             LoggerFactory.getLogger(HtmxController.class);
 
     @View("htmx")
-    @Get("/")
     public HttpResponse<?> htmx() {
         log.info("htmx");
 
@@ -45,7 +44,7 @@ class HtmxController {
         log.info("htmx-sse-connect");
 
         return HtmxResponse.builder().build();
-//        "event: sseEvent \n data: <div>new stuff</div>");
+        //        "event: sseEvent \n data: <div>new stuff</div>");
     }
 
     //    @Get("/clicked")
