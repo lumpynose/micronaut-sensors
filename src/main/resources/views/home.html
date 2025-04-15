@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      th:replace="~{layoutFile :: layout(~{::title}, ~{::section}, ~{})}"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <title>SensorDb1</title>
 </head>
@@ -10,13 +8,16 @@
     <h2>SensorDb1</h2>
     <ul>
         <li>
-            <a th:href="@{/sensor}">View sensor data</a>
+            <a data-th-href="@{/sensors}">View sensor data</a>
         </li>
         <li>
-            <a th:href="@{/htmx}">Simple htmx example</a>
+            <a data-th-href="@{/list}">Edit sensors</a>
         </li>
         <li>
-            <a th:href="@{/htmx/htmx-sse}">Simple htmx SSE example</a>
+            <a data-th-href="@{/htmx}">Simple htmx example</a>
+        </li>
+        <li>
+            <a data-th-href="@{/htmx/htmx-sse}">Simple htmx SSE example</a>
         </li>
     </ul>
 </section>

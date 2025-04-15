@@ -42,16 +42,16 @@ h2 {
 .grid-container {
     display: grid;
     justify-content: start;
-    /*grid-template-columns: [label] 0.25fr [value] 0.25fr;*/
     grid-template-columns: min-content min-content;
     grid-gap: 0.5em;
     padding: 0.5em;
     margin-bottom: 1em;
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 1.0);
-    width: 50%;
+    width: fit-content;
 }
 
+/* the title, so to speak, for the form */
 .grid-sensorid {
     grid-column-start: 1;
     grid-column-end: span 2;
@@ -61,22 +61,16 @@ h2 {
 }
 
 .grid-label {
-    /*grid-column: 1 / 2;*/
     grid-column-start: 1;
     grid-column-end: auto;
     justify-self: end;
-    /*background-color: rgba(255, 0, 255, 0.2);*/
-    /*border: 1px solid rgba(0, 255, 255, 1.0);*/
 }
 
 .grid-input,
 .grid-select {
-    /*grid-column: 2 / 3;*/
     grid-column-start: 2;
     grid-column-end: auto;
     justify-self: start;
-    /*background-color: rgba(0, 255, 255, 0.2);*/
-    /*border: 1px solid rgba(255, 0, 255, 1.0);*/
 }
 
 .grid-submit {

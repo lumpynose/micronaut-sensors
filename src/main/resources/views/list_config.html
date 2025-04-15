@@ -16,8 +16,8 @@
          data-th-each="sensor : ${sensors}">
         <div data-th-class="sensor-box">
             <div data-th-class="sensorid" data-th-if="${sensor.sensorId}">
-                <a data-th-href="@{/edit(sensorId=${sensor.sensorId}, channel=${sensor.channel})}"
-                   href="/edit/">
+                <a data-th-href="@{/configjdbc/edit(sensorId=${sensor.sensorId}, channel=${sensor.channel})}"
+                   href="/config/edit/">
                     <span data-th-text="${sensor.sensorId}">
                         Sensor Id
                     </span><span data-th-if="${sensor.channel}"

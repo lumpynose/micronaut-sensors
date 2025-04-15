@@ -2,6 +2,7 @@ package com.objecteffects.sensors.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.views.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ class HomeController {
             LoggerFactory.getLogger(HomeController.class);
 
     @View("home")
+    @Get
     public HttpResponse<?> index() {
         log.info("home");
 

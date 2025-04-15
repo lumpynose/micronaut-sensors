@@ -16,6 +16,7 @@ class HtmxController {
             LoggerFactory.getLogger(HtmxController.class);
 
     @View("htmx")
+    @Get
     public HttpResponse<?> htmx() {
         log.info("htmx");
 
