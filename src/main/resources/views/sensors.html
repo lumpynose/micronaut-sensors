@@ -11,7 +11,10 @@
 </head>
 <body>
 <section>
-    <h2>Sensors</h2>
+    <h2 data-th-class="sensors">Sensors
+        <span data-th-class="time" data-th-text="${#temporals.format(localdatetime,
+        'dd MMM yyyy HH:mm')}"></span>
+    </h2>
     <div data-th-class="main-box"
          data-th-each="sensorvalue : ${sensorvalues}">
         <div data-th-class="sensor-box" data-th-if="${sensorvalue.temperature}">

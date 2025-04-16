@@ -2,7 +2,6 @@ package com.objecteffects.sensors.controller;
 
 import com.objecteffects.sensors.listener.MqttListener;
 import com.objecteffects.sensors.listener.SensorValue;
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -10,7 +9,9 @@ import io.micronaut.views.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Controller("/sensors")
 class SensorsController {
@@ -28,12 +29,13 @@ class SensorsController {
     public HttpResponse<?> index() {
         final List<SensorValue> sensorValues = mqttListener.getSensorvalues();
 
-        //        final SensorValues sensorValues =
-        //                new SensorValues(mqttListener.getSensorvalues());
-
         log.info("sensorValues: {}", sensorValues);
 
-        return HttpResponse.ok(
-                CollectionUtils.mapOf("sensorvalues", sensorValues));
+        final Map<String, Object> model =
+                Map.of("sensorvalues", sensorValues, "localdatetime",
+                        LocalDateTime.now());
+
+        return HttpResponse.ok(model);
+        //                CollectionUtils.mapOf("sensorvalues", sensorValues));
     }
 }

@@ -3,14 +3,14 @@
 <!--      lang="en">-->
 <html>
 <head>
-    <title>Sensors Title</title>
+    <title>Sensors Edit</title>
     <meta charset="UTF-8">
     <link href="/css/stylesheet.css" rel="stylesheet">
     <!--    <script src="/js/htmx-2.0.4.js"></script>-->
 </head>
 <body>
 <section data-th-class="sensor-edit">
-    <h2>Sensor Edit</h2>
+    <h2 data-th-class="edit"">Sensor Edit</h2>
     <form action="/submit" method="post">
         <div data-th-class="grid-container">
             <div data-th-class="grid-sensorid" data-th-if="${sensor.sensorId}">

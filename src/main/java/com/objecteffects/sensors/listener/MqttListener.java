@@ -67,6 +67,12 @@ public class MqttListener implements MqttSubscriberExceptionHandler {
 
         log.info("sensorValue: {}", sensorValue);
 
+        final Map<String, Object> sensorValueMap =
+                jsonMapper.readValue(data, HashMap.class);
+        sensorValueMap.put("sensorId", sensorId);
+
+        log.info("sensorValueMap: {}", sensorValueMap);
+
         // the key for the sensorValues map
         final String sensorIdChan;
 

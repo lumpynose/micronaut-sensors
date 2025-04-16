@@ -3,9 +3,21 @@ footer {
     margin-top: 1em;
 }
 
-h2 {
+h2.edit {
     text-align: left;
     font-size: x-large;
+}
+
+h2.sensors {
+    text-align: center;
+    font-size: x-large;
+}
+
+span.time {
+    text-align: center;
+    font-size: x-small;
+    display: block;
+    margin-top: 0.5em;
 }
 
 .main-box, .main-box-cfg {
